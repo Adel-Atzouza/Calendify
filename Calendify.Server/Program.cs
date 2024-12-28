@@ -16,7 +16,7 @@ builder.Services.AddIdentityApiEndpoints<AppUser>()
 builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+// builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddScoped<UserService>();
 
@@ -39,7 +39,7 @@ app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.UseAuthorization();
-app.MapIdentityApi<IdentityUser>();
+app.MapIdentityApi<AppUser>();
 
 
 // Configure the HTTP request pipeline.

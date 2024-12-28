@@ -9,7 +9,7 @@ namespace Calendify.Server.Controllers
 {
     [ApiController]
     [Route("")]
-    public class AccountController(SignInManager<IdentityUser> signInManager, UserService userService) : ControllerBase
+    public class AccountController(SignInManager<AppUser> signInManager, UserService userService) : ControllerBase
     {
         [Authorize()]
         [HttpPost("logout")]

@@ -1,12 +1,13 @@
+using Calendify.Server.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Calendify.Server.Services
 {
     public class UserService
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public UserService(UserManager<IdentityUser> userManager)
+        public UserService(UserManager<AppUser> userManager)
         {
             _userManager = userManager;
         }

@@ -1,56 +1,78 @@
-import { useEffect, useState } from 'react';
-import './App.css';
+import { createTheme } from '@mui/material/styles';
 
-interface Forecast {
-    date: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import EventIcon from '@mui/icons-material/Event';
+
+import { AppProvider } from '@toolpad/core/react-router-dom';
+import type { Navigation } from '@toolpad/core';
+import { Outlet } from 'react-router-dom';
+
+const NAVIGATION: Navigation = [
+  {
+    kind: 'header',
+    title: 'Main items',
+  },
+  {
+    title: 'Dashboard',
+    icon: <DashboardIcon />,
+  },
+  {
+    segment: 'events',
+    title: 'Events',
+    icon: <EventIcon />,
+  },
+];
+
+const customTheme = createTheme({
+  cssVariables: {
+    colorSchemeSelector: 'data-toolpad-color-scheme',
+  },
+  colorSchemes: {
+    light: {
+      palette: {
+        background: {
+          default: '#F9F9FE',
+          paper: '#EEEEF9',
+        },
+      },
+    },
+    dark: {
+      palette: {
+        background: {
+          default: '#2A4364',
+          paper: '#112E4D',
+        },
+      },
+    },
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 600,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+});
+
+
+export default function AppProviderTheme() {
+
+
+  return (
+    // preview-start
+    <AppProvider
+      navigation={NAVIGATION}
+      // router={router}
+      theme={customTheme}
+      branding={{
+        title: "Calendify",
+        logo: <EventIcon style={{width: 30, height: 40, color: customTheme.palette.primary.main}} />
+      }}
+    >
+      <Outlet />
+    </AppProvider>
+    // preview-end
+  );
 }
-
-function App() {
-    const [forecasts, setForecasts] = useState<Forecast[]>();
-
-    useEffect(() => {
-        populateWeatherData();
-    }, []);
-
-    const contents = forecasts === undefined
-        ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
-        : <table className="table table-striped" aria-labelledby="tableLabel">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
-                </tr>
-            </thead>
-            <tbody>
-                {forecasts.map(forecast =>
-                    <tr key={forecast.date}>
-                        <td>{forecast.date}</td>
-                        <td>{forecast.temperatureC}</td>
-                        <td>{forecast.temperatureF}</td>
-                        <td>{forecast.summary}</td>
-                    </tr>
-                )}
-            </tbody>
-        </table>;
-
-    return (
-        <div>
-            <h1 id="tableLabel">Weather forecast</h1>
-            <p>This component demonstrates fetching data from the server.</p>
-            {contents}
-        </div>
-    );
-
-    async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
-        const data = await response.json();
-        setForecasts(data);
-    }
-}
-
-export default App;

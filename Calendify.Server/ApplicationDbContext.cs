@@ -19,6 +19,7 @@ namespace Calendify.Server
             {
                 new IdentityRole
                 {
+                    Id = "4d5a7d6c-6df4-4d72-9373-91fdb8a541e0",
                     Name = "Admin",
                     NormalizedName = "ADMIN"
                 }
