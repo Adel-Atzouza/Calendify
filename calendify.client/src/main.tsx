@@ -9,6 +9,7 @@ import Layout from './layouts/dashboard';
 
 import DashboardPage from './pages/index.tsx';
 import EventsPage from './pages/events.tsx';
+import SignInPage from './pages/signIn';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
             Component: EventsPage,
           },
         ],
+      },
+      {
+        path: '/sign-in',
+        Component: SignInPage,
       },
     ],
   },
