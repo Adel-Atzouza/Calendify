@@ -8,7 +8,7 @@ The app uses 2 UI libraries
 * MUI
 * Shadcn
 
-For the backend ASPNET.CORE is used with C#.
+For the backend ASPNET.Core is used with C#.
 The app uses these major dependencies
 * Microsoft.AspNetCore.Identity;
 * Microsoft.EntityFrameworkCore;
