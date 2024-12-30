@@ -7,7 +7,6 @@ import { AppProvider } from '@toolpad/core/react-router-dom';
 import type { Navigation, Session } from '@toolpad/core';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-import { SessionContext } from './SessionContext';
 import React from 'react';
 
 
@@ -62,7 +61,6 @@ const customTheme = createTheme({
 
 
 export default function AppProviderTheme() {
-  const [session, setSession] = React.useState<Session | null>(null);
   const navigate = useNavigate();
 
   const signIn = React.useCallback(() => {
@@ -70,34 +68,21 @@ export default function AppProviderTheme() {
   }, [navigate]);
 
   const signOut = React.useCallback(() => {
-    setSession(null);
     navigate('/sign-in');
   }, [navigate]);
 
-  const sessionContextValue = React.useMemo(
-    () => ({ session, setSession }),
-    [session, setSession],
-  );
-
 
   return (
-    // preview-start
-    <SessionContext.Provider value={sessionContextValue}>
       <AppProvider
         navigation={NAVIGATION}
-        // router={router}
         theme={customTheme}
         branding={{
           title: "Calendify",
           logo: <EventIcon style={{width: 30, height: 40, color: customTheme.palette.primary.main}} />
         }}
-        session={session}
         authentication={{signIn, signOut}}
       >
         <Outlet />
       </AppProvider>
-    </SessionContext.Provider>
-    
-    // preview-end
   );
 }

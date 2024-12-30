@@ -4,23 +4,31 @@ using Calendify.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+
 
 namespace Calendify.Server.Controllers
 {
     [ApiController]
     [Route("")]
-    public class AccountController(SignInManager<AppUser> signInManager, UserService userService) : ControllerBase
+    public class AccountController(
+        SignInManager<AppUser> signInManager, UserService userService) : Controller
     {
         [Authorize()]
         [HttpPost("logout")]
-        public async Task<IActionResult> Logout([FromBody] object empty)
+        public async Task<IActionResult> Logout()
         {
-            if (empty != null)
-            {
-                await signInManager.SignOutAsync();
-                return Ok();
-            }
-            return Unauthorized();
+            await signInManager.SignOutAsync();
+            return Ok();
+        }
+
+        [Authorize()]
+        [HttpGet("pingauth")]
+        public IActionResult PingAuth()
+        {
+            ClaimsPrincipal user = new();
+            var email = user.FindFirstValue(ClaimTypes.Email);
+            return Json(new { Email = email }); ;
         }
 
         [Authorize(Roles = "Admin")]
