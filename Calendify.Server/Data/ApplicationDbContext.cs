@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Calendify.Server.Models;
 
 
-namespace Calendify.Server
+namespace Calendify.Server.Data
 {
 
     public class ApplicationDbContext : IdentityDbContext<AppUser>

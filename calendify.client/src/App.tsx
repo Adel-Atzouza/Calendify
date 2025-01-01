@@ -6,8 +6,8 @@ import EventIcon from '@mui/icons-material/Event';
 import { AppProvider } from '@toolpad/core/react-router-dom';
 import type { Navigation, Session } from '@toolpad/core';
 import { Outlet, useNavigate } from 'react-router-dom';
-
 import { SessionContext } from './SessionContext';
+
 import React from 'react';
 
 
@@ -81,11 +81,9 @@ export default function AppProviderTheme() {
 
 
   return (
-    // preview-start
     <SessionContext.Provider value={sessionContextValue}>
       <AppProvider
         navigation={NAVIGATION}
-        // router={router}
         theme={customTheme}
         branding={{
           title: "Calendify",
@@ -97,7 +95,5 @@ export default function AppProviderTheme() {
         <Outlet />
       </AppProvider>
     </SessionContext.Provider>
-    
-    // preview-end
   );
 }
