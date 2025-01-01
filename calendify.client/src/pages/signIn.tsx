@@ -76,11 +76,13 @@
 
 import { SignInPage } from "@toolpad/core";
 import { useNavigate } from "react-router-dom";
+import { useSession } from '../SessionContext';
 
 function SignIn() {
 
     // state variable for error messages
     const navigate = useNavigate();
+    const { setSession } = useSession();
 
     // handle submit event for the form
     const loginToBackend = async (formData : any) => {
@@ -88,9 +90,8 @@ function SignIn() {
         if (!formData.get('email') || !formData.get('password')) {
           throw new Error("Please fill in all fields.");
         } else {
-            // post data to the /register api
-
             var loginurl = "";
+            console.log(formData)
             if (formData.get('rememberme') == true)
                 loginurl = "/login?useCookies=true";
             else
@@ -126,6 +127,30 @@ function SignIn() {
         }
     };
 
+    // define a fetch function that retries until status 200 or 401
+    async function isLoggedIn(url: string, options: any) {
+        try {
+            // make the fetch request
+            let response = await fetch(url, options);
+
+            // check the status code
+            if (response.status == 200) {
+                console.log("Authorized");
+                return response; // return the response
+            } else if (response.status == 401) {
+                console.log("Unauthorized");
+                return null; // return the response
+            } else {
+                // throw an error to trigger the catch block
+                throw new Error("" + response.status);
+            }
+        } catch (error) {
+          throw error;
+        }
+    }
+
+       
+
 
     return (
       <SignInPage
@@ -135,6 +160,19 @@ function SignIn() {
         signIn={async (provider, formData, callbackUrl) => {
           try {
             await loginToBackend(formData);
+            let response = await isLoggedIn("/pingauth", {
+                method: "GET",
+            })
+            if (response)
+            {
+              let session = {
+                user: {
+                  
+                  image: 'https://avatars.githubusercontent.com/u/19550456'
+                }
+              }
+              setSession(session);
+            }
             navigate(callbackUrl || '/', { replace: true });
             return {};
           } catch (error) {
