@@ -9,7 +9,10 @@ namespace Calendify.Server.Data
 
     public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options){ }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<EventAttendanceModel> EventAttendances { get; set; }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -25,6 +28,6 @@ namespace Calendify.Server.Data
                 }
             };
             builder.Entity<IdentityRole>().HasData(roles);
-        }   
+        }
     }
 }
