@@ -1,23 +1,25 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using Calendify.Server.Models;
 
 namespace Calendify.Server.Models
 {
     public class EventAttendanceModel
     {
-        public int Id { get; set; } // Unique identifier for each attendance record
+        public int Id { get; set; }
 
-        public int UserId { get; set; } // ID of the user attending the event
-
-        public int EventId { get; set; } // ID of the event being attended
-
-        public DateTime AttendedAt { get; set; } = DateTime.UtcNow; // Date and time of attendance registration
+        [Required]
+        public int UserId { get; set; }
+        [Required]
+        public int EventId { get; set; }
+        [Required]
+        public DateTime AttendedAt { get; set; }
 
         public int Rating { get; set; }
         public string? Feedback { get; set; }
 
-        public User User { get; set; } // Reference to the User who attends
+        public User User { get; set; }
 
-        public Event Event { get; set; } // Reference to the attended Event
+        public Event Event { get; set; }
     }
 }

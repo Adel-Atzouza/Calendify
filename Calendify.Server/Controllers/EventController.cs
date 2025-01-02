@@ -6,7 +6,7 @@ using Calendify.Server.Models;
 namespace Calendify.Controllers
 {
     [Route("Events/")]
-    public class EventController : Controller
+    public class EventController : ControllerBase
     {
         private readonly IEventService _eventService;
         public EventController(IEventService eventService)
@@ -16,7 +16,7 @@ namespace Calendify.Controllers
         [HttpGet()]
         public async Task<IActionResult> GetEvent([FromQuery] int id)
         {
-            Event _event = await _eventService.GetEvent(id);
+            Event? _event = await _eventService.GetEvent(id);
             return _event == null ? NotFound($"Cannot find event with id: {id}") : Ok(_event);
         }
 

@@ -1,0 +1,18 @@
+POST https://localhost:5165 HTTP/1.1
+
+
+{
+  "id": 0,
+  "title": "string",
+  "description": "string",
+  "date": "2025-01-02T16:05:36.898Z",
+  "startTime": "2015-07-05T22:16:18Z",
+  "endTime": "2022-05-02T22:16:18Z",
+  "location": "string",
+  "maxAttendees": 2147483647,
+  "category": "string",
+  "adminApproval": true,
+  "attendances": [
+   
+  ]
+}

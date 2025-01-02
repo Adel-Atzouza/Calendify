@@ -14,40 +14,43 @@ namespace Calendify.Server.Services
         }
         public async Task<Event?> GetEvent(int id)
         {
-            Event? _event = await _context.Events.FindAsync(id);
-            return _event;
+            try
+            {
+                Event? _event = await _context.Events.FindAsync(id);
+                return _event;
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
         public async Task<bool> PostEvent(Event _event)
         {
-            if (_event == null || Helper.FieldsAreNull(_event)) return false;
             await _context.Events.AddAsync(_event);
-            await _context.SaveChangesAsync();
-            return true;
-
+            int AffectedRows = await _context.SaveChangesAsync();
+            return AffectedRows > 0;
         }
         public async Task<bool> PutEvent(int id, Event _event)
         {
-            if (_event == null || Helper.FieldsAreNull(_event)) return false;
-            Event? FoundEvent = await _context.Events.Where(e => e.Id == id).FirstOrDefaultAsync();
+            Event? FoundEvent = await _context.Events.FindAsync(id);
             if (FoundEvent == null)
             {
                 return false;
             }
-            FoundEvent.Title = _event.Title;
-            FoundEvent.Description = _event.Description;
-            FoundEvent.Date = _event.Date;
-            FoundEvent.StartTime = _event.StartTime;
-            FoundEvent.EndTime = _event.EndTime;
-            FoundEvent.Location = _event.Location;
-            FoundEvent.AdminApproval = _event.AdminApproval;
-            FoundEvent.MaxAttendees = _event.MaxAttendees;
-            FoundEvent.Category = _event.Category;
+
+            try
+            {
+                _context.Entry(FoundEvent).CurrentValues.SetValues(_event);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
 
 
-
-            _context.Events.Update(FoundEvent);
-            await _context.SaveChangesAsync();
-            return true;
 
 
         }
@@ -56,10 +59,8 @@ namespace Calendify.Server.Services
             Event? _event = await _context.Events.FindAsync(id);
             if (_event == null) return false;
             _context.Events.Remove(_event);
-            await _context.SaveChangesAsync();
-            return true;
-
-
+            int AffectedRows = await _context.SaveChangesAsync();
+            return AffectedRows == 1;
         }
 
     }
