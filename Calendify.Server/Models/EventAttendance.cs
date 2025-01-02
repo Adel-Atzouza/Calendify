@@ -22,4 +22,10 @@ namespace Calendify.Server.Models
 
         public Event Event { get; set; }
     }
+
+    public class AttendEventRequest
+    {
+        public int UserId { get; set; }
+        public int EventId { get; set; }
+    }
 }
