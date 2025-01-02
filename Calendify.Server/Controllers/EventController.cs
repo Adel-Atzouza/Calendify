@@ -23,6 +23,10 @@ namespace Calendify.Controllers
         [HttpPost()]
         public async Task<IActionResult> AddEvent([FromBody] Event _event)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             bool result = await _eventService.PostEvent(_event);
             return result ? Ok("Event added succesfully") : BadRequest();
         }
@@ -30,6 +34,10 @@ namespace Calendify.Controllers
         [HttpPut()]
         public async Task<IActionResult> PutEvent([FromQuery] int id, [FromBody] Event _event)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             bool result = await _eventService.PutEvent(id, _event);
             return result ? Ok("Event changed succesfully") : BadRequest();
         }
