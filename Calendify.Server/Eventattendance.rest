@@ -1,0 +1,7 @@
+POST https://localhost:5165/EventAttendance HTTP/1.1
+Content-Type: application/json
+
+{
+    "UserId" : 1,
+    "EventId" : 1
+}
