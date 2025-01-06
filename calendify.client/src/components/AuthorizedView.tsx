@@ -1,21 +1,15 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
+import { useSession } from '../SessionContext';
 
-
-const UserContext = createContext({});
-
-interface User {
-    email: string;
-}
 
 
 function AuthorizeView(props: { children: React.ReactNode }) {
+    const { setSession } = useSession();
+
 
     const [authorized, setAuthorized] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true); // add a loading state
-    let emptyuser: User = { email: "" };
-
-    const [user, setUser] = useState(emptyuser);
 
 
     useEffect(() => {
@@ -39,7 +33,11 @@ function AuthorizeView(props: { children: React.ReactNode }) {
                 if (response.status == 200) {
                     console.log("Authorized");
                     let j: any = await response.json();
-                    setUser({ email: j.email });
+                    setSession({
+                        user: { 
+                            email: j.email,
+                            image: 'https://avatars.githubusercontent.com/u/19550456'
+                        }});
                     setAuthorized(true);
                     return response; // return the response
                 } else if (response.status == 401) {
@@ -81,7 +79,9 @@ function AuthorizeView(props: { children: React.ReactNode }) {
     if (loading) {
         return (
             <>
-                <p>Loading...</p>
+                {/* <p>Loading...</p> */}
+                {props.children}
+
             </>
         );
     }
@@ -89,7 +89,7 @@ function AuthorizeView(props: { children: React.ReactNode }) {
         if (authorized && !loading) {
             return (
                 <>
-                    <UserContext.Provider value={user}>{props.children}</UserContext.Provider>
+                    {props.children}
                 </>
             );
         } else {
@@ -103,15 +103,5 @@ function AuthorizeView(props: { children: React.ReactNode }) {
 
 }
 
-export function AuthorizedUser(props: { value: string }) {
-    // Consume the username from the UserContext
-    const user: any = React.useContext(UserContext);
-
-    // Display the username in a h1 tag
-    if (props.value == "email")
-        return <>{user.email}</>;
-    else
-        return <></>
-}
 
 export default AuthorizeView;

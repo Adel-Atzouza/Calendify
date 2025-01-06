@@ -69,8 +69,11 @@ export default function AppProviderTheme() {
     navigate('/sign-in');
   }, [navigate]);
 
-  const signOut = React.useCallback(() => {
+  const signOut = React.useCallback(async () => {
     setSession(null);
+    console.log("Sign out") 
+
+    await fetch("/logout", { 'method': 'POST'} );
     navigate('/sign-in');
   }, [navigate]);
 
