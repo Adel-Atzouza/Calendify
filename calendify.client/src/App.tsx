@@ -61,8 +61,18 @@ const customTheme = createTheme({
 });
 
 
+
+
+
 export default function AppProviderTheme() {
+  
   const [session, setSession] = React.useState<Session | null>(null);
+
+  const sessionContextValue = React.useMemo(
+    () => ({ session, setSession }),
+    [session, setSession],
+  );
+
   const navigate = useNavigate();
 
   const signIn = React.useCallback(() => {
@@ -77,12 +87,6 @@ export default function AppProviderTheme() {
     navigate('/sign-in');
   }, [navigate]);
 
-  const sessionContextValue = React.useMemo(
-    () => ({ session, setSession }),
-    [session, setSession],
-  );
-
-
   return (
     <SessionContext.Provider value={sessionContextValue}>
       <AppProvider
@@ -94,6 +98,7 @@ export default function AppProviderTheme() {
         }}
         session={session}
         authentication={{signIn, signOut}}
+        
       >
         <Outlet />
       </AppProvider>

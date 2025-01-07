@@ -42,7 +42,7 @@ function SignIn() {
 
             if (response.status === 200) {
                 console.log("Authorized");
-                return response; // return the response
+                return response.json(); // return the response
             } else if (response.status === 401) {
                 console.log("Unauthorized");
                 return null; // return null for unauthorized
@@ -56,7 +56,7 @@ function SignIn() {
 
     return (
         <SignInPage
-            providers={[{ id: "credentials", name: "Credentials" }]}
+            providers={[{id: "github", name: "Github"},{ id: "credentials", name: "Credentials" }]}
             signIn={async (provider, formData, callbackUrl) => {
                 try {
                     // Wait for the login to complete
@@ -69,9 +69,7 @@ function SignIn() {
 
                     if (response) {
                         let session = {
-                            user: {
-                                image: 'https://avatars.githubusercontent.com/u/19550456'
-                            }
+                            user: response
                         };
                         setSession(session);
                     }
