@@ -35,8 +35,8 @@ namespace Calendify.Server.Controllers
         [HttpPost("AssignRoleToUser")]
         public async Task<IActionResult> AssignRoleToUser([FromBody] AssignRoleToUserDto assignRoleToUserDto)
         {
-            if (assignRoleToUserDto is not null) 
-            { 
+            if (assignRoleToUserDto is not null)
+            {
                 var success = await userService.AssignRoleToUser(assignRoleToUserDto.Email, assignRoleToUserDto.RoleName);
                 return Ok(success ? "Role assigned successfully" : "Role not assigned");
             }
