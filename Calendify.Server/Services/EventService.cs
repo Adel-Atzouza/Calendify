@@ -50,9 +50,17 @@ namespace Calendify.Server.Services
                 return false;
             }
 
-
-
-
+        }
+        public async Task<bool> ApproveEvent(int EventId)
+        {
+            Event EventFound = await _context.Events.FindAsync(EventId);
+            if (EventFound == null)
+            {
+                return false;
+            }
+            EventFound.AdminApproval = true;
+            await _context.SaveChangesAsync();
+            return true;
         }
         public async Task<bool> DeleteEvent(int id)
         {

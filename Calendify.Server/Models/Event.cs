@@ -16,13 +16,13 @@ namespace Calendify.Server.Models
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Date is required.")]
-        public DateTime? Date { get; set; }
+        public DateTime Date { get; set; }
 
         [Required(ErrorMessage = "StartTime is required.")]
-        public TimeSpan? StartTime { get; set; }
+        public TimeSpan StartTime { get; set; }
 
         [Required(ErrorMessage = "EndTime is required.")]
-        public TimeSpan? EndTime { get; set; }
+        public TimeSpan EndTime { get; set; }
 
         [Required(ErrorMessage = "Location is required.")]
         public string Location { get; set; }

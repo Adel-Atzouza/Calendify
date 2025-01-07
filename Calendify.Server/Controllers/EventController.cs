@@ -2,10 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Calendify.Server.Services;
 using Calendify.Server.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Calendify.Controllers
 {
-    [Route("Events/")]
+    [Route("Events")]
     public class EventController : ControllerBase
     {
         private readonly IEventService _eventService;
@@ -20,17 +21,18 @@ namespace Calendify.Controllers
             return _event == null ? NotFound($"Cannot find event with id: {id}") : Ok(_event);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost()]
-        public async Task<IActionResult> AddEvent([FromBody] Event _event)
+        public async Task<IActionResult> PostEvent([FromBody] Event _event)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             bool result = await _eventService.PostEvent(_event);
-            return result ? Ok("Event added succesfully") : BadRequest();
+            return result ? Created() : BadRequest();
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPut()]
         public async Task<IActionResult> PutEvent([FromQuery] int id, [FromBody] Event _event)
         {
@@ -41,12 +43,24 @@ namespace Calendify.Controllers
             bool result = await _eventService.PutEvent(id, _event);
             return result ? Ok("Event changed succesfully") : BadRequest();
         }
+        [Authorize(Roles = "Admin")]
+        [HttpPut("Approve")]
+        public async Task<IActionResult> ApproveEvent([FromQuery] int EventId)
+        {
+            bool Response = await _eventService.ApproveEvent(EventId);
+            return Response ? Ok($"Event with Id {EventId} has been approved") : NotFound();
+        }
 
+
+        [Authorize(Roles = "Admin")]
         [HttpDelete()]
         public async Task<IActionResult> DeleteEvent([FromQuery] int id)
         {
             bool result = await _eventService.DeleteEvent(id);
             return result ? Ok("Event Deleted succesfully") : NotFound("Cannot find event");
         }
+
+
+
     }
 }
