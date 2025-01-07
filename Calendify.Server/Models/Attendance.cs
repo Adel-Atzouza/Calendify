@@ -1,4 +1,6 @@
-namespace Calender.Models
+using Microsoft.AspNetCore.Identity;
+
+namespace Calendify.Server.Models
 {
     public class Attendance
     {
