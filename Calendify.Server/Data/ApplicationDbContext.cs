@@ -10,7 +10,6 @@ namespace Calendify.Server.Data
     public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
         public DbSet<Event> Events { get; set; }
-        public DbSet<User> User { get; set; }
         public DbSet<EventAttendanceModel> EventAttendances { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 

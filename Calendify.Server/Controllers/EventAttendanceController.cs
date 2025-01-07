@@ -4,8 +4,7 @@ using Calendify.Server.Models;
 
 namespace Calendify.Controllers
 {
-    [Route("EventAttendance")]
-    [ApiController]
+    [Route("EventAttendance/")]
     public class EventAttendanceController : ControllerBase
     {
         private readonly EventattendanceService _eventattendanceService;

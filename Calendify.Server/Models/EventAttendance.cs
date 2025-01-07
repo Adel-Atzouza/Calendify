@@ -18,14 +18,14 @@ namespace Calendify.Server.Models
         public int Rating { get; set; }
         public string? Feedback { get; set; }
 
-        public User User { get; set; }
+        public AppUser? Userid {get;set; }
 
         public Event Event { get; set; }
     }
 
     public class AttendEventRequest
     {
-        public int UserId { get; set; }
+        public Guid Id { get; set; }
         public int EventId { get; set; }
     }
 }
