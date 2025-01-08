@@ -47,16 +47,16 @@ namespace Calendify.Controllers
         // }
 
 
-        // // GET: View Attendees
-        // [HttpGet("{eventId}/Attendees")]
-        // public async Task<IActionResult> GetEventAttendees(int eventId)
-        // {
-        //     var attendees = await _eventattendanceService.GetAttendeesByEventId(eventId);
-        //     if (attendees == null)
-        //         return NotFound("No attendees found for this event.");
+        // GET: View Attendees
+        [HttpGet("{eventId}/Attendees")]
+        public async Task<IActionResult> GetEventAttendees(int eventId)
+        {
+            var attendees = await _eventattendanceService.GetEventAttendees(eventId);
+            if (attendees == null)
+                return NotFound("No attendees found for this event.");
 
-        //     return Ok(attendees);
-        // }
+            return Ok(attendees);
+        }
 
         // // DELETE: Cancel Attendance
         // [HttpDelete("Cancel")]

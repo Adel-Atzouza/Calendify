@@ -28,7 +28,6 @@ namespace Calendify.Server.Data
             };
             builder.Entity<IdentityRole>().HasData(roles);
 
-                        builder.Entity<IdentityRole>().HasData(roles);
 
             builder.Entity<EventAttendanceModel>()
                 .HasOne(ea => ea.User)

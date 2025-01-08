@@ -14,3 +14,8 @@ Content-Type: application/json
   "adminApproval": true,
   "attendances": []
 }
+
+
+### DELETE Event with ID 1
+DELETE https://localhost:5165/Events?id=1
+Content-Type: application/json

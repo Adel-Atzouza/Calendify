@@ -28,4 +28,11 @@ namespace Calendify.Server.Models
         public string UserId { get; set; }
         public int EventId { get; set; }
     }
+
+    public class AttendeeDtogetattendees
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
+
 }
