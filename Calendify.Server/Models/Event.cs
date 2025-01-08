@@ -34,8 +34,6 @@ namespace Calendify.Server.Models
         public string Category { get; set; }
 
         public bool AdminApproval { get; set; } = false;
-
-        public List<EventAttendanceModel> Attendances { get; set; } = new List<EventAttendanceModel>();
     }
 
 }

@@ -13,12 +13,12 @@ namespace Calendify.Server.Services
             _context = context;
         }
 
-        public async Task<string> AttendEvent(int userId, int eventId)
+        public async Task<string> AttendEvent(string userId, int eventId)
         {
             var eventToAttend = await _context.Events.FirstOrDefaultAsync(e => e.Id == eventId);
             if (eventToAttend == null) return "Event not found.";
 
-            var user = await _context.User.FirstOrDefaultAsync(u => u.Id == userId);
+            var user = await _context.Users.FirstOrDefaultAsync(o => o.Id == userId);
             if (user == null) return "User not found.";
 
             var currentDate = DateTime.UtcNow;

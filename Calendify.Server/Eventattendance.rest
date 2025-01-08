@@ -3,6 +3,6 @@ POST https://localhost:5165/EventAttendance/Attend HTTP/1.1
 Content-Type: application/json
 
 {
-  "UserId": 1,
+  "UserId": "51f4a241-b402-4e10-84ae-8cb5ce24d0a0",
   "EventId": 1
 }

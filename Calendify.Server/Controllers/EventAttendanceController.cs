@@ -18,7 +18,7 @@ namespace Calendify.Controllers
         [HttpPost("Attend")]
         public async Task<IActionResult> AttendEvent([FromBody] AttendEventRequest request)
         {
-            if (request == null || request.UserId <= 0 || request.EventId <= 0)
+            if (request == null || request.UserId == null || request.EventId <= 0)
                 return BadRequest("Invalid request data.");
 
             var result = await _eventattendanceService.AttendEvent(request.UserId, request.EventId);
