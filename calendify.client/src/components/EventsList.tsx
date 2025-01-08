@@ -1,4 +1,5 @@
 import React from "react";
+import TextField from "@mui/material/TextField";
 let baseUrl: string = "https://localhost:5165";
 
 export interface User {
@@ -46,49 +47,55 @@ let event: event = {
   adminApproval: true,
   attendances: [],
 };
-export const ShowPostEvent = (): JSX.Element => {
+export const ShowPostEvent = () => {
   return (
     <div>
       <div>
-        Title:
-        <input value={""}></input>
+        <TextField label="Title" value={""} fullWidth variant="outlined" />
       </div>
       <div>
-        Description:
-        <input value={""}></input>
+        <TextField
+          label="Description"
+          value={""}
+          fullWidth
+          variant="outlined"
+        />
       </div>
       <div>
-        Date:
-        <input value={""}></input>
+        <TextField label="Date" value={""} fullWidth variant="outlined" />
       </div>
       <div>
-        StartTime:
-        <input value={""}></input>
+        <TextField label="Start Time" value={""} fullWidth variant="outlined" />
       </div>
       <div>
-        EndTime:
-        <input value={""}></input>
+        <TextField label="End Time" value={""} fullWidth variant="outlined" />
       </div>
       <div>
-        Location:
-        <input value={""}></input>
+        <TextField label="Location" value={""} fullWidth variant="outlined" />
       </div>
       <div>
-        MaxAttendees:
-        <input type={"number"}></input>
+        <TextField
+          label="Max Attendees"
+          type="number"
+          fullWidth
+          variant="outlined"
+        />
       </div>
       <div>
-        Category:
-        <input value={""}></input>
+        <TextField label="Category" value={""} fullWidth variant="outlined" />
       </div>
       <div>
-        AdminApproval:
-        <input value={""} type={"number"}></input>
+        <TextField
+          label="Admin Approval"
+          value={""}
+          type="number"
+          fullWidth
+          variant="outlined"
+        />
       </div>
     </div>
   );
 };
-
 export const postEvent = async (event: event): Promise<void> => {
   await fetch(baseUrl, {
     method: "POST",
