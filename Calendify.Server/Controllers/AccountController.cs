@@ -31,7 +31,6 @@ namespace Calendify.Server.Controllers
             return Json(new { Email = email }); ;
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost("AssignRoleToUser")]
         public async Task<IActionResult> AssignRoleToUser([FromBody] AssignRoleToUserDto assignRoleToUserDto)
         {

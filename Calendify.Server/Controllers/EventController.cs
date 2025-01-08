@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Calendify.Server.Services;
 using Calendify.Server.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 
 namespace Calendify.Controllers
 {
@@ -29,8 +30,12 @@ namespace Calendify.Controllers
             {
                 return BadRequest(ModelState);
             }
-            bool result = await _eventService.PostEvent(_event);
-            return result ? Created() : BadRequest();
+            int GeneratedId = await _eventService.PostEvent(_event);
+            var response = new
+            {
+                Message = $"Event with id {GeneratedId} has been made"
+            };
+            return GeneratedId > 0 ? Created("localhost:3000/Events", response) : BadRequest();
         }
         [Authorize(Roles = "Admin")]
         [HttpPut()]
@@ -50,6 +55,8 @@ namespace Calendify.Controllers
             bool Response = await _eventService.ApproveEvent(EventId);
             return Response ? Ok($"Event with Id {EventId} has been approved") : NotFound();
         }
+
+
 
 
         [Authorize(Roles = "Admin")]
