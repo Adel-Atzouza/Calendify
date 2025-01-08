@@ -17,6 +17,9 @@ namespace Calendify.Server
             builder.Services.AddIdentityApiEndpoints<AppUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            
+            // builder.Services.AddIdentity<AppUser, IdentityRole>()
+            //     .AddEntityFrameworkStores<ApplicationDbContext>();
 
             var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found."); ;
             builder.Services.AddDbContext<ApplicationDbContext>(

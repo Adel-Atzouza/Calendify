@@ -34,10 +34,8 @@ function AuthorizeView(props: { children: React.ReactNode }) {
                     console.log("Authorized");
                     let j: any = await response.json();
                     setSession({
-                        user: { 
-                            email: j.email,
-                            image: 'https://avatars.githubusercontent.com/u/19550456'
-                        }});
+                        user: j
+                    });
                     setAuthorized(true);
                     return response; // return the response
                 } else if (response.status == 401) {
