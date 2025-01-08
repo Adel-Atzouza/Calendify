@@ -12,7 +12,7 @@ namespace Calendify.Server.Controllers
     [ApiController]
     [Route("")]
     public class AccountController(
-        SignInManager<AppUser> signInManager, UserService userService) : Controller
+        SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, UserService userService) : ControllerBase
     {
         [Authorize()]
         [HttpPost("logout")]
@@ -24,11 +24,15 @@ namespace Calendify.Server.Controllers
 
         [Authorize()]
         [HttpGet("pingauth")]
-        public IActionResult PingAuth()
+        public async Task<IActionResult> PingAuth()
         {
-            ClaimsPrincipal user = new();
-            var email = user.FindFirstValue(ClaimTypes.Email);
-            return Json(new { Email = email }); ;
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var user = await userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var roles = await userManager.GetRolesAsync(user);
+            var name = user.FirstName + " " + user.LastName;
+            var image = user.ImgUrl;
+
+            return Ok(new { Email = email, Roles = roles, Name = name, Image = image });
         }
 
         [Authorize(Roles = "Admin")]
