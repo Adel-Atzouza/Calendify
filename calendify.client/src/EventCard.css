@@ -1,0 +1,16 @@
+/* EventCard.css */
+.EventCard {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #eaeaea; /* Replace with the extracted darker blue */
+    color: #242424; /* Ensures text is readable */
+    list-style: none;
+    font-family: Arial, sans-serif;
+  }
+  
+  .EventCard strong {
+    font-size: 1.2em;
+    color: #000000; /* Optional: Highlight the title */
+  }
+  
