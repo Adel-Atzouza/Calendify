@@ -61,24 +61,31 @@ const customTheme = createTheme({
 });
 
 
+
+
+
 export default function AppProviderTheme() {
+  
   const [session, setSession] = React.useState<Session | null>(null);
-  const navigate = useNavigate();
-
-  const signIn = React.useCallback(() => {
-    navigate('/sign-in');
-  }, [navigate]);
-
-  const signOut = React.useCallback(() => {
-    setSession(null);
-    navigate('/sign-in');
-  }, [navigate]);
 
   const sessionContextValue = React.useMemo(
     () => ({ session, setSession }),
     [session, setSession],
   );
 
+  const navigate = useNavigate();
+
+  const signIn = React.useCallback(() => {
+    navigate('/sign-in');
+  }, [navigate]);
+
+  const signOut = React.useCallback(async () => {
+    setSession(null);
+    console.log("Sign out") 
+
+    await fetch("/logout", { 'method': 'POST'} );
+    navigate('/sign-in');
+  }, [navigate]);
 
   return (
     <SessionContext.Provider value={sessionContextValue}>
@@ -91,6 +98,7 @@ export default function AppProviderTheme() {
         }}
         session={session}
         authentication={{signIn, signOut}}
+        
       >
         <Outlet />
       </AppProvider>

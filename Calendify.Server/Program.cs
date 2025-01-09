@@ -8,8 +8,7 @@ namespace Calendify.Server
 {
     public class Program
     {
-        public static void Main(string[] args)
-        {
+        public static void Main(string[] args) {
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddAuthorization();
@@ -17,12 +16,16 @@ namespace Calendify.Server
             builder.Services.AddIdentityApiEndpoints<AppUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            
+            // builder.Services.AddIdentity<AppUser, IdentityRole>()
+            //     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found."); ;
+            var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");;
             builder.Services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlite(ConnectionString));
 
             builder.Services.AddScoped<UserService>();
+            builder.Services.AddScoped<EventattendanceService>();
             builder.Services.AddScoped<IEventService, EventService>();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
