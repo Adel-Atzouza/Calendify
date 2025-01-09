@@ -58,19 +58,52 @@ namespace Calendify.Controllers
             return Ok(attendees);
         }
 
-        // // DELETE: Cancel Attendance
-        // [HttpDelete("Cancel")]
-        // public async Task<IActionResult> CancelAttendance([FromBody] int userId, [FromBody] int eventId)
-        // {
-        //     if (userId <= 0 || eventId <= 0)
-        //         return BadRequest("Invalid user or event ID.");
+        [HttpGet("{userId}/attendances")]
+        public async Task<IActionResult> GetAttendedEventsUserid(string userId)
+        {
+            Console.WriteLine($"Received UserId: {userId}");
 
-        //     var result = await _eventattendanceService.RemoveAttendance(userId, eventId);
+            var attendance = await _eventattendanceService.GetEventsForUser(userId);
 
-        //     if (!result)
-        //         return StatusCode(500, "Failed to cancel attendance.");
+            if (attendance == null || !attendance.Any())
+                return NotFound("No attendances found.");
 
-        //     return Ok("Successfully canceled attendance.");
-        // }
+            return Ok(attendance);
+        }
+
+        [HttpPost("SubmitReview")]
+        public async Task<IActionResult> SubmitReview([FromBody] EventReviewRequest request)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _eventattendanceService.SubmitReview(request.UserId, request.EventId, request.Rating, request.Feedback);
+
+            // If the user didn't attend, return a 404
+            if (result == "Attendance not found. User did not attend this event.")
+                return NotFound(result);
+
+            // Otherwise, confirm the review was submitted
+            return Ok(result); // "Review submitted successfully."
+        }
+
+
+        // DELETE: Cancel Attendance
+        [HttpDelete("Cancel")]
+        public async Task<IActionResult> CancelAttendance([FromBody] string userId, [FromBody] int eventId)
+        {
+            if (string.IsNullOrWhiteSpace(userId) || eventId <= 0)
+                return BadRequest("Invalid user or event ID.");
+
+            var result = await _eventattendanceService.CancelAttendance(userId, eventId);
+
+            if (result == "Attendance not found.")
+                return NotFound(result);
+
+            return Ok(result);
+        }
+
     }
 }
