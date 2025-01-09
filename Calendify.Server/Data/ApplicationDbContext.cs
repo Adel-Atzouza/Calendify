@@ -14,6 +14,10 @@ namespace Calendify.Server.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            // builder.Entity<AppUser>()
+            //     (c => c.UserId)
+            //     .HasMany(c.listAttendances);
+
             base.OnModelCreating(builder);
 
             List<IdentityRole> roles = new List<IdentityRole>

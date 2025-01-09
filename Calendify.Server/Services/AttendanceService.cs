@@ -13,14 +13,24 @@ namespace Calendify.Server.Services
             _context = context;
         }
 
+        // Voeg een Attendance toe (dit blijft ongewijzigd)
         public async Task<Attendance> AddAttendanceAsync(Attendance attendance)
         {
             attendance.Date = DateTime.UtcNow;
+
+            // Ensure UserId is valid before saving
+            if (string.IsNullOrEmpty(attendance.UserId))
+            {
+                throw new Exception("UserId must be provided.");
+            }
+
             _context.Attendances.Add(attendance);
             await _context.SaveChangesAsync();
             return attendance;
         }
 
+
+        // Verwijder een Attendance (dit blijft ongewijzigd)
         public async Task<bool> DeleteAttendanceAsync(int id)
         {
             var attendance = await _context.Attendances.FindAsync(id);
@@ -34,9 +44,20 @@ namespace Calendify.Server.Services
             return true;
         }
 
-        public async Task<Attendance?> GetAttendanceByIdAsync(int id)
+        // Haal een Attendance op, maar retourneer alleen de relevante velden in de AttendanceDTO
+        public async Task<AttendanceDTO?> GetAttendanceByIdAsync(int id)
         {
-            return await _context.Attendances.FindAsync(id);
+            // Gebruik Select om alleen de nodige velden op te halen en de AttendanceDTO te vullen
+            return await _context.Attendances
+                .Where(a => a.Id == id)
+                .Select(a => new AttendanceDTO
+                {
+                    Id = a.Id,
+                    UserId = a.UserId,  // Alleen de UserId, niet het volledige User object
+                    Description = a.Description,
+                    Date = a.Date
+                })
+                .FirstOrDefaultAsync();  // Retourneer null als geen Attendance gevonden is
         }
     }
 }
