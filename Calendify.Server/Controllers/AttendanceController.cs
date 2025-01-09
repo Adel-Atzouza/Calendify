@@ -25,13 +25,6 @@ namespace Calendify.Server.Controllers
             {
                 return BadRequest("Invalid attendance data.");
             }
-
-            // Assuming you want to get the UserId from the current logged-in user:
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // This gets the userId from the JWT token
-
-            // If you have to assign the UserId dynamically, assign it here
-            attendance.UserId = userId;
-
             var createdAttendance = await _attendanceService.AddAttendanceAsync(attendance);
             return CreatedAtAction(nameof(GetAttendance), new { id = createdAttendance.Id }, createdAttendance);
         }
