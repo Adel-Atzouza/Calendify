@@ -1,7 +1,10 @@
-import { event, eventWithoutDeatails } from "./Event.state";
-import '../EventCard.css'
+import type { eventProps, EventModel } from "./Event.state";
 
-export function EventListWithDetails({ events }: { events: event[] }) {
+import "../EventCard.css";
+import React, { useState } from 'react';
+
+
+export function EventListWithDetails({ events }: { events: EventModel[] }) {
   return (
     <div>
       <ul>
@@ -38,25 +41,31 @@ export function EventListWithDetails({ events }: { events: event[] }) {
     </div>
   );
 }
-export const EventList = ({ Events }: { Events: event[] }) => {
+export const EventList = ({ Events }: { Events: EventModel [] }) => {
   return (
     <div>
       <ul>
         {Events.map((ev, index) => {
-          const eventWithoutDetails: eventWithoutDeatails = {
-            title: ev.title,
-            category: ev.category,
-            date: ev.date,
-          };
-
-          return <EventCard key={index} id={index} ev={eventWithoutDetails} />;
+          return <EventCard key={index} id={index} event={ev} />;
         })}
       </ul>
     </div>
   );
 };
-const EventCard = ({ id, ev }: { id: number; ev: eventWithoutDeatails }) => (
-  <li className="EventCard" key={id}>
-    <strong>{ev.title}</strong> {ev.category} {ev.date}
-  </li>
-);
+const handleClickEventCard = () => {
+  alert("You clicked an event");
+};
+
+const EventCard : React.FC<eventProps> = ({ id , event }) => {
+  const [eventIsOpen, setEventIsOpen] = useState<boolean>(false);
+
+  const openEvent = () => setEventIsOpen(true)
+  const closeEvent = () => setEventIsOpen(false)
+
+  return (<li onClick={handleClickEventCard} className="EventCard" key={id}>
+    <strong>{event.title}</strong> {event.category} {event.date}
+  </li>)
+
+
+}
+  

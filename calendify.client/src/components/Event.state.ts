@@ -1,6 +1,6 @@
 import { EventAttendanceModel } from "./EventAttendence.state";
 
-export type event = {
+export type EventModel  = {
   title: string;
   description: string;
   date: string;
@@ -13,15 +13,9 @@ export type event = {
   attendances: EventAttendanceModel[];
 };
 
-export type eventWithoutDeatails = {
-  title : string,
-  date : string,
-  category : string
-}
+export type eventProps = { id: number; event: EventModel  };
 
-export type eventProps = { event: event };
-
-export const events: event[] = [
+export const events: EventModel [] = [
   {
     title: "Annual Company Meeting",
     description: "A meeting to discuss company goals and achievements.",
