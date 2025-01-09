@@ -1,36 +1,35 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Calendify.Server.Services;
 using Calendify.Server.Models;
+using Calendify.Server.Services;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Calendify.Services;
 
-namespace Calendify.Controllers
+namespace Calendify.Server.Controllers
 {
     [Route("Recommendations/")]
-    [ApiController]
     public class RecommendationsController : ControllerBase
     {
         private readonly RecommendationService _recommendationsService;
 
-        public RecommendationsController(RecommendationService recommendationService)
+        public RecommendationsController(RecommendationService recommendationsService)
         {
-            _recommendationsService = recommendationService;
+            _recommendationsService = recommendationsService;
         }
 
         // Endpoint to get recommendations based on categories of attended events
         [HttpGet("{userId}")]
-        public async Task<IActionResult> GetRecommendations(int userId)
+        public async Task<IActionResult> GetRecommendations(string userId)
         {
-            // Fetch recommendations for the user
             var recommendations = await _recommendationsService.GetRecommendations(userId);
 
-            // Check if any recommendations were found
             if (recommendations == null || recommendations.Count == 0)
             {
-                return NotFound("No recommendations available for this user.");
+                return NotFound($"No recommendations available for user with ID: {userId}");
             }
 
-            // Return the list of recommended events
             return Ok(recommendations);
         }
+
     }
 }

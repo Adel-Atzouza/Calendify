@@ -22,3 +22,15 @@ Content-Type: application/json
 {
 "userId": "a12c6d9a-ff44-4e7a-a3b7-398d3772f3d3", "eventId": 2, "rating": 5, "feedback": "This event was gay!"
 }
+
+### 
+Get https://localhost:5165/Recommendations/84e9da70-5220-49c3-b334-32144d0f82bf
+Content-Type: application/json
+
+
+### 
+Get Event Recommendations for a Different User GET http://localhost:3000/api/Recommendations/1 Accept: application/json
+
+
+### 
+Get Event Recommendations for a Non-existent User GET http://localhost:3000/api/Recommendations/999 Accept: application/json
