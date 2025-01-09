@@ -1,11 +1,14 @@
 import Typography from "@mui/material/Typography";
-import { ShowPostEvent } from "../components/EventsList";
+import { EventList, EventListWithDetails } from "../components/EventsList";
+import { events } from "../components/Event.state";
 
 export default function DashboardPage() {
   return (
     <Typography>
       Welcome to Toolpad!
-      <ShowPostEvent />
+      <div>
+        <EventList Events={events} />
+      </div>
     </Typography>
   );
 }
