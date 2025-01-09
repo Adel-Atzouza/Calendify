@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "UserId": "a12c6d9a-ff44-4e7a-a3b7-398d3772f3d3",
-  "EventId": 2
+  "EventId": 3
 }
 
 ### GET Event Attendees for Event ID 1
@@ -24,7 +24,7 @@ Content-Type: application/json
 }
 
 ### 
-Get https://localhost:5165/Recommendations/84e9da70-5220-49c3-b334-32144d0f82bf
+Get https://localhost:5165/Recommendations/a12c6d9a-ff44-4e7a-a3b7-398d3772f3d3
 Content-Type: application/json
 
 
