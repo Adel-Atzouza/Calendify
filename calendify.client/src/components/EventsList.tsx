@@ -1,5 +1,5 @@
 import { event, eventWithoutDeatails } from "./Event.state";
-import { ListItemText } from "@mui/material";
+import '../EventCard.css'
 
 export function EventListWithDetails({ events }: { events: event[] }) {
   return (
@@ -56,5 +56,7 @@ export const EventList = ({ Events }: { Events: event[] }) => {
   );
 };
 const EventCard = ({ id, ev }: { id: number; ev: eventWithoutDeatails }) => (
-  <ListItemText key={id} primary={ev.title} secondary={ev.date} />
+  <li className="EventCard" key={id}>
+    <strong>{ev.title}</strong> {ev.category} {ev.date}
+  </li>
 );
