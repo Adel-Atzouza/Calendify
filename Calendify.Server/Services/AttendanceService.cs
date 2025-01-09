@@ -45,12 +45,12 @@ namespace Calendify.Server.Services
         }
 
         // Haal een Attendance op, maar retourneer alleen de relevante velden in de AttendanceDTO
-        public async Task<AttendanceDTO?> GetAttendanceByIdAsync(int id)
+        public async Task<Attendance?> GetAttendanceByIdAsync(int id)
         {
             // Gebruik Select om alleen de nodige velden op te halen en de AttendanceDTO te vullen
             return await _context.Attendances
                 .Where(a => a.Id == id)
-                .Select(a => new AttendanceDTO
+                .Select(a => new Attendance
                 {
                     Id = a.Id,
                     UserId = a.UserId,  // Alleen de UserId, niet het volledige User object
