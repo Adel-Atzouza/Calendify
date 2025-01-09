@@ -7,6 +7,8 @@ namespace Calendify.Server.Services
         Task<bool> PostEvent(Event _event);
         Task<bool> PutEvent(int id, Event _event);
         Task<bool> DeleteEvent(int id);
+        Task<List<string>> GetReviews(int id);
+        Task<double> avgRatingEvent(int EventId);
 
     }
 }

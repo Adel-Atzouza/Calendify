@@ -3,7 +3,7 @@ POST https://localhost:5165/EventAttendance/Attend HTTP/1.1
 Content-Type: application/json
 
 {
-  "UserId": "84e9da70-5220-49c3-b334-32144d0f82bf",
+  "UserId": "a12c6d9a-ff44-4e7a-a3b7-398d3772f3d3",
   "EventId": 2
 }
 
@@ -12,7 +12,7 @@ GET https://localhost:5165/EventAttendance/2/Attendees
 Content-Type: application/json
 
 ### GET Events Attended by a Specific User
-GET https://localhost:5165/EventAttendance/84e9da70-5220-49c3-b334-32144d0f82bf/attendances
+GET https://localhost:5165/EventAttendance/a12c6d9a-ff44-4e7a-a3b7-398d3772f3d3/attendances
 Content-Type: application/json
 
 ####Submit Review for Event
@@ -20,5 +20,5 @@ POST https://localhost:5165/EventAttendance/SubmitReview
 Content-Type: application/json
 
 {
-"userId": "84e9da70-5220-49c3-b334-32144d0f82bf", "eventId": 2, "rating": 5, "feedback": "This event was fantastic!"
+"userId": "a12c6d9a-ff44-4e7a-a3b7-398d3772f3d3", "eventId": 2, "rating": 5, "feedback": "This event was gay!"
 }

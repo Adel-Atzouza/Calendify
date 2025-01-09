@@ -50,9 +50,6 @@ namespace Calendify.Server.Services
                 return false;
             }
 
-
-
-
         }
         public async Task<bool> DeleteEvent(int id)
         {
@@ -61,6 +58,31 @@ namespace Calendify.Server.Services
             _context.Events.Remove(_event);
             int AffectedRows = await _context.SaveChangesAsync();
             return AffectedRows == 1;
+        }
+
+        public async Task<List<string>> GetReviews(int EventId)
+        {
+            var review = await _context.EventAttendances
+                .Where(o => o.EventId == EventId)
+                .Select(o => o.Feedback)
+                .ToListAsync();
+
+            return review;
+        }
+
+        public async Task<double> avgRatingEvent(int EventId)
+        {
+            var ratings = await _context.EventAttendances
+                .Where(o => o.EventId == EventId)
+                .Select(o => o.Rating)
+                .ToListAsync();
+
+            if (ratings.Count == 0)
+            {
+                return 0;
+            }
+
+            return ratings.Average();
         }
 
     }
