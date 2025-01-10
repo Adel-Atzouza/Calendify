@@ -11,6 +11,8 @@ import DashboardPage from './pages/index.tsx';
 import EventsPage from './pages/events.tsx';
 import SignInPage from './pages/signIn';
 import SignUpPage from './pages/signUp.tsx';
+import SettingsPage from './pages/settings.tsx';
+import OtpLogin from './pages/2faLogin.tsx';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,10 @@ const router = createBrowserRouter([
             path: 'events',
             Component: EventsPage,
           },
+          {
+            path: '/settings',
+            Component: SettingsPage
+          },
         ],
       },
       {
@@ -37,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: '/sign-up',
         Component: SignUpPage,
+      },
+      {
+        path: '/2fa',
+        Component: OtpLogin,
       },
     ],
   },
