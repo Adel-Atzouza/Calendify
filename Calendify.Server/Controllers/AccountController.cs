@@ -46,5 +46,80 @@ namespace Calendify.Server.Controllers
             }
             return BadRequest("Provide valid fields 'Email' and 'RoleName'");
         }
+
+
+        [HttpPost("v2/register")]
+        public async Task<IActionResult> Register([FromBody] RegisterUserDto registerDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var appUser = new AppUser
+                {
+                    UserName = registerDto.Email,
+                    FirstName = registerDto.FirstName,
+                    LastName = registerDto.LastName,
+                    Email = registerDto.Email,
+                };
+
+                var createdUser = await userManager.CreateAsync(appUser, registerDto.Password);
+
+                if (createdUser.Succeeded)
+                {
+                    var roleResult = await userService.AssignRoleToUser(appUser.Email, "User");
+                    if (!roleResult)
+                    {
+                        return StatusCode(500, "User role could not be assigned.");
+                    }
+                    return Ok();
+                }
+                else
+                {
+                    return StatusCode(500, createdUser.Errors);
+                }
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
+        }
+
+        [Authorize()]
+        [HttpPost("v2/settings")]
+        public async Task<IActionResult> SaveSettings([FromBody] SettingsDto settingsDto)
+        {
+            try {
+                    var user = await userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    user.ImgUrl = settingsDto.ImgUrl;
+
+                    var result = userManager.UpdateAsync(user);
+
+                    return Ok("Settings saved");
+            } 
+            catch 
+            {
+            return BadRequest();
+
+            }
+            
+        }
+
+        [Authorize()]
+        [HttpGet("v2/settings")]
+        public async Task<IActionResult> GetSettings()
+        {
+            try {
+                var user = await userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                return Ok(new { imgurl = user.ImgUrl, OTP = user.TwoFactorEnabled });
+            } 
+            catch 
+            {
+            return BadRequest();
+
+            }
+        }
+
     }
 }

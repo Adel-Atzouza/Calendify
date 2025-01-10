@@ -42,9 +42,6 @@ import { useBranding, RouterContext } from '../shared/context';
 // import { BrandingContext, RouterContext } from '../shared/context';
 
 
-import ForgotPassword from './ForgotPassword';
-
-
 const mergeSlotSx = (defaultSx: SxProps<Theme>, slotProps?: { sx?: SxProps<Theme> }) => {
   if (Array.isArray(slotProps?.sx)) {
     return [defaultSx, ...slotProps.sx];
@@ -282,8 +279,8 @@ export interface SignInPageProps {
 function SignInPage(props: SignInPageProps) {
   const { providers, signIn, slots, slotProps, sx } = props;
   const theme = useTheme();
+  
   const { branding } = useBranding();
-  // const branding = React.useContext(BrandingContext);
   const router = React.useContext(RouterContext);
   const passkeyProvider = providers?.find((provider) => provider.id === 'passkey');
   const credentialsProvider = providers?.find((provider) => provider.id === 'credentials');
@@ -300,14 +297,6 @@ function SignInPage(props: SignInPageProps) {
     success: '',
   });
 
-  const [open, setOpen] = React.useState(false);
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
   const callbackUrl = router?.searchParams.get('callbackUrl') ?? '/';
   const singleProvider = React.useMemo(() => providers?.length === 1, [providers]);
@@ -356,14 +345,14 @@ function SignInPage(props: SignInPageProps) {
                 fontWeight: 600,
               }}
             >
-              Sign in {branding?.title ? `to ${branding.title}` : null}
+              Sign up {branding?.title ? `to ${branding.title}` : null}
             </Typography>
           )}
           {slots?.subtitle ? (
             <slots.subtitle />
           ) : (
             <Typography variant="body2" color="textSecondary" gutterBottom textAlign="center">
-              Welcome, please sign in to continue
+              Welcome, please sign up to continue
             </Typography>
           )}
           <Box sx={{ mt: theme.spacing(1), width: '100%' }}>
@@ -408,7 +397,7 @@ function SignInPage(props: SignInPageProps) {
                           textTransform: 'capitalize',
                         }}
                       >
-                        <span>Sign in with {provider.name}</span>
+                        <span>Sign up with {provider.name}</span>
                       </LoadingButton>
                     </form>
                   );
@@ -476,7 +465,7 @@ function SignInPage(props: SignInPageProps) {
                       }}
                       {...slotProps?.submitButton}
                     >
-                      Sign in with {passkeyProvider.name || 'Passkey'}
+                      Sign up with {passkeyProvider.name || 'Passkey'}
                     </LoadingButton>
                   )}
                 </Box>
@@ -550,7 +539,7 @@ function SignInPage(props: SignInPageProps) {
                       }}
                       {...slotProps?.submitButton}
                     >
-                      Sign in with Email
+                      Sign up with Email
                     </LoadingButton>
                   )}
                 </Box>
@@ -587,11 +576,46 @@ function SignInPage(props: SignInPageProps) {
                     }));
                   }}
                 >
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb:2}}>
+                  <TextField
+                  sx={{mr:1}}
+                    required
+                        {...getCommonTextFieldProps(theme, {
+                          label: 'First name',
+                          placeholder: '',
+                          id: 'first-name',
+                          name: 'first-name',
+                          type: 'text',
+                          autoComplete: 'given-name',
+                          autoFocus: singleProvider,
+                          
+                          // ...slotProps?.emailField,
+                        })}
+                      />
+                    <TextField
+
+                  sx={{ml:1}}
+                    
+                    required
+                        {...getCommonTextFieldProps(theme, {
+                          label: 'Last name',
+                          placeholder: '',
+                          id: 'last-name',
+                          type: 'text',
+                          name: 'last-name',
+                          autoComplete: 'family-name',
+                          autoFocus: singleProvider,
+                          // ...slotProps?.emailField,
+                        })}
+                      />
+
+                  </Box>
                   <Stack direction="column" spacing={2} sx={{ mb: 2 }}>
                     {slots?.emailField ? (
                       <slots.emailField {...slotProps?.emailField} />
                     ) : (
                       <TextField
+                      required
                         {...getCommonTextFieldProps(theme, {
                           label: 'Email',
                           placeholder: 'your@email.com',
@@ -608,11 +632,30 @@ function SignInPage(props: SignInPageProps) {
                       <slots.passwordField {...slotProps?.passwordField} />
                     ) : (
                       <TextField
+                      required
+
                         {...getCommonTextFieldProps(theme, {
                           name: 'password',
                           type: 'password',
                           label: 'Password',
                           id: 'password',
+                          placeholder: '************',
+                          autoComplete: 'current-password',
+                          ...slotProps?.passwordField,
+                        })}
+                      />
+                    )}
+                    {slots?.passwordField ? (
+                      <slots.passwordField {...slotProps?.passwordField} />
+                    ) : (
+                      <TextField
+                      required
+
+                        {...getCommonTextFieldProps(theme, {
+                          name: 'confirm-password',
+                          type: 'password',
+                          label: 'Confirm password',
+                          id: 'confirm-password',
                           placeholder: '************',
                           autoComplete: 'current-password',
                           ...slotProps?.passwordField,
@@ -629,29 +672,6 @@ function SignInPage(props: SignInPageProps) {
                       justifyContent: 'space-between',
                     }}
                   >
-                    {slots?.rememberMe ? (
-                      <slots.rememberMe {...slotProps?.rememberMe} />
-                    ) : (
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            name="remember"
-                            value="true"
-                            color="primary"
-                            sx={{ padding: 0.5, '& .MuiSvgIcon-root': { fontSize: 20 } }}
-                          />
-                        }
-                        label="Remember me"
-                        {...slotProps?.rememberMe}
-                        slotProps={{
-                          typography: {
-                            color: 'textSecondary',
-                            fontSize: theme.typography.pxToRem(14),
-                          },
-                          ...slotProps?.rememberMe?.slotProps,
-                        }}
-                      />
-                    )}
                   </Stack>
                   {slots?.submitButton ? (
                     <slots.submitButton {...slotProps?.submitButton} />
@@ -671,30 +691,11 @@ function SignInPage(props: SignInPageProps) {
                       }}
                       {...slotProps?.submitButton}
                     >
-                      Sign in
+                      Sign up
                     </LoadingButton>
                   )}
 
-                    {/* {slots?.forgotPasswordLink ? (
-                      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <slots.forgotPasswordLink {...slotProps?.forgotPasswordLink} />
-                      </Box>  
-                    ) : null} */}
 
-                    
-                    <ForgotPassword open={open} handleClose={handleClose} />
-
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                      <Link
-                        component="button"
-                        type="button"
-                        onClick={handleClickOpen}
-                        variant="body2"
-                        sx={{ alignSelf: 'center', fontWeight: 700 }}
-                      >
-                        Forgot your password?
-                      </Link>
-                    </Box>
 
                   {slots?.signUpLink ? (
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -776,4 +777,4 @@ SignInPage.propTypes /* remove-proptypes */ = {
   ]),
 } as any;
 
-export { SignInPage };
+export { SignInPage as SignOutPage };
