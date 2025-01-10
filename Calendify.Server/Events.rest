@@ -1,0 +1,32 @@
+POST https://localhost:5165/Events HTTP/1.1
+POST https://localhost:5165/Events HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Team Meeting",
+  "description": "Monthly team alignment meeting.",
+  "date": "2025-01-08",
+  "startTime": "09:00:00",
+  "endTime": "11:00:00",
+  "location": "Conference Room 1",
+  "maxAttendees": 20,
+  "category": "Work",
+  "adminApproval": true,
+  "attendances": []
+}
+##########
+POST https://localhost:5165/Events HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Team Meeting",
+  "description": "Monthly team alignment meeting.",
+  "date": "2025-01-08",
+  "startTime": "09:00:00",
+  "endTime": "11:00:00",
+  "location": "Conference Room 1",
+  "maxAttendees": 20,
+  "category": "Work",
+  "adminApproval": false,
+  "attendances": []
+}

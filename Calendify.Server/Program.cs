@@ -32,6 +32,8 @@ namespace Calendify.Server
                 options => options.UseSqlite(ConnectionString));
 
             builder.Services.AddScoped<UserService>();
+            builder.Services.AddScoped<EventattendanceService>();
+            builder.Services.AddScoped<IEventService, EventService>();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
