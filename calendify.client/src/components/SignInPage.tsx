@@ -672,26 +672,26 @@ function SignInPage(props: SignInPageProps) {
                     </LoadingButton>
                   )}
 
-                    {/* {slots?.forgotPasswordLink ? (
+                  {/* {slots?.forgotPasswordLink ? (
                       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                         <slots.forgotPasswordLink {...slotProps?.forgotPasswordLink} />
                       </Box>  
                     ) : null} */}
 
-                    
-                    <ForgotPassword open={open} handleClose={handleClose} />
 
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                      <Link
-                        component="button"
-                        type="button"
-                        onClick={handleClickOpen}
-                        variant="body2"
-                        sx={{ alignSelf: 'center', fontWeight: 700 }}
-                      >
-                        Forgot your password?
-                      </Link>
-                    </Box>
+                  <ForgotPassword open={open} handleClose={handleClose} />
+
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Link
+                      component="button"
+                      type="button"
+                      onClick={handleClickOpen}
+                      variant="body2"
+                      sx={{ alignSelf: 'center', fontWeight: 700 }}
+                    >
+                      Forgot your password?
+                    </Link>
+                  </Box>
 
                   {slots?.signUpLink ? (
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>

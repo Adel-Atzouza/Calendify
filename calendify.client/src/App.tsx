@@ -25,6 +25,11 @@ const NAVIGATION: Navigation = [
     title: 'Events',
     icon: <EventIcon />,
   },
+  {
+    segment: 'Attendance',
+    title: 'Attendance',
+    icon: <EventIcon />,
+  },
 ];
 
 const customTheme = createTheme({
@@ -65,7 +70,7 @@ const customTheme = createTheme({
 
 
 export default function AppProviderTheme() {
-  
+
   const [session, setSession] = React.useState<Session | null>(null);
 
   const sessionContextValue = React.useMemo(
@@ -81,9 +86,9 @@ export default function AppProviderTheme() {
 
   const signOut = React.useCallback(async () => {
     setSession(null);
-    console.log("Sign out") 
+    console.log("Sign out")
 
-    await fetch("/logout", { 'method': 'POST'} );
+    await fetch("/logout", { 'method': 'POST' });
     navigate('/sign-in');
   }, [navigate]);
 
@@ -94,11 +99,11 @@ export default function AppProviderTheme() {
         theme={customTheme}
         branding={{
           title: "Calendify",
-          logo: <EventIcon style={{width: 30, height: 40, color: customTheme.palette.primary.main}} />
+          logo: <EventIcon style={{ width: 30, height: 40, color: customTheme.palette.primary.main }} />
         }}
         session={session}
-        authentication={{signIn, signOut}}
-        
+        authentication={{ signIn, signOut }}
+
       >
         <Outlet />
       </AppProvider>
