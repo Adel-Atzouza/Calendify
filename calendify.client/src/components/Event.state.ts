@@ -19,6 +19,12 @@ export type eventProps = {
   event: EventModel;
 };
 
+export type eventDetailsProps = {
+  id: number;
+  event: EventModel;
+  closeEvent: () => void;
+};
+
 export const users: User[] = [
   {
     id: 1,

@@ -1,4 +1,4 @@
-import type { eventProps, EventModel } from "./Event.state";
+import type { eventProps, EventModel, eventDetailsProps } from "./Event.state";
 import "../EventCard.css";
 import { useState } from "react";
 
@@ -59,10 +59,10 @@ const EventCard = ({ id, event }: eventProps) => {
       </Card>
     );
   }
-  return <EventDetails id={id} event={event} />;
+  return <EventDetails id={id} event={event} closeEvent={closeEvent} />;
 };
 
-const EventDetails = ({ id, event }: eventProps) => {
+const EventDetails = ({ id, event, closeEvent }: eventDetailsProps) => {
   // const [Submitted, setIsSubmitted] = useState(false);
   const date = event.date.split("-");
   return (
@@ -88,6 +88,7 @@ const EventDetails = ({ id, event }: eventProps) => {
       </Typography>
       <CardActions sx={{ justifyContent: "center" }}>
         <Button
+          onClick={closeEvent}
           className="EventDetailButton"
           sx={{ border: "1px solid", color: "dark", justifyContent: "center" }}
         >
