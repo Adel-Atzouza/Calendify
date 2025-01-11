@@ -26,12 +26,13 @@ namespace Calendify.Server.Services
                 return null;
             }
         }
-        public async Task<int> PostEvent(Event _event)
-        {
-            await _context.Events.AddAsync(_event);
-            int AffectedRows = await _context.SaveChangesAsync();
-            return AffectedRows > 0 ? _event.Id : 0;
-        }
+            public async Task<bool> PostEvent(Event _event)
+            {
+                await _context.Events.AddAsync(_event);
+                int AffectedRows = await _context.SaveChangesAsync();
+                return AffectedRows > 0;
+            }
+
         public async Task<bool> PutEvent(int id, Event _event)
         {
             Event? FoundEvent = await _context.Events.FindAsync(id);
@@ -70,6 +71,31 @@ namespace Calendify.Server.Services
             _context.Events.Remove(_event);
             int AffectedRows = await _context.SaveChangesAsync();
             return AffectedRows == 1;
+        }
+
+        public async Task<List<string>> GetReviews(int EventId)
+        {
+            var review = await _context.EventAttendances
+                .Where(o => o.EventId == EventId)
+                .Select(o => o.Feedback)
+                .ToListAsync();
+
+            return review;
+        }
+
+        public async Task<double> avgRatingEvent(int EventId)
+        {
+            var ratings = await _context.EventAttendances
+                .Where(o => o.EventId == EventId)
+                .Select(o => o.Rating)
+                .ToListAsync();
+
+            if (ratings.Count == 0)
+            {
+                return 0;
+            }
+
+            return ratings.Average();
         }
 
     }
