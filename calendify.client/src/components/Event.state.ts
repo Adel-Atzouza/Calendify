@@ -2,6 +2,7 @@ import { EventAttendanceModel } from "./EventAttendence.state";
 import { User } from "./User.state";
 
 export interface EventModel {
+  id: number; 
   title: string;
   description: string;
   date: string;
@@ -27,7 +28,7 @@ export type eventDetailsProps = {
 
 export const users: User[] = [
   {
-    id: 1,
+    id: "550e8400-e29b-41d4-a716-446655440000",
     firstName: "John",
     lastName: "Doe",
     email: "john.doe@example.com",
@@ -35,7 +36,7 @@ export const users: User[] = [
     attendances: [],
   },
   {
-    id: 2,
+    id: "c9bf9e57-1685-4c89-bafb-ff5af830be8a",
     firstName: "Jane",
     lastName: "Smith",
     email: "jane.smith@example.com",
@@ -43,7 +44,7 @@ export const users: User[] = [
     attendances: [],
   },
   {
-    id: 3,
+    id: "1f1b8c4d-dbee-451e-b1d1-7087051b5e45",
     firstName: "Emily",
     lastName: "Brown",
     email: "emily.brown@example.com",
@@ -52,8 +53,10 @@ export const users: User[] = [
   },
 ];
 
+
 export const events: EventModel[] = [
   {
+    id: 1,
     title: "Annual Company Meeting",
     description: "A meeting to discuss company goals and achievements.",
     date: "2025-02-15",
@@ -66,17 +69,17 @@ export const events: EventModel[] = [
     attendances: [
       {
         id: 1,
-        userId: 1,
+        userId: "550e8400-e29b-41d4-a716-446655440000", // John Doe
         eventId: 1,
         attendedAt: "2025-02-15T10:00:00",
         rating: 5,
         feedback: "Very informative and well-organized.",
         user: users[0],
-        event: null, // Will be linked programmatically if needed.
+        event: null,
       },
       {
         id: 2,
-        userId: 3,
+        userId: "1f1b8c4d-dbee-451e-b1d1-7087051b5e45", // Emily Brown
         eventId: 1,
         attendedAt: "2025-02-15T10:15:00",
         rating: 4,
@@ -87,6 +90,7 @@ export const events: EventModel[] = [
     ],
   },
   {
+    id: 2,
     title: "Team Building Workshop",
     description: "Interactive sessions to enhance teamwork and collaboration.",
     date: "2025-03-10",
@@ -99,7 +103,7 @@ export const events: EventModel[] = [
     attendances: [
       {
         id: 3,
-        userId: 2,
+        userId: "c9bf9e57-1685-4c89-bafb-ff5af830be8a", // Jane Smith
         eventId: 2,
         attendedAt: "2025-03-10T09:30:00",
         rating: 5,
@@ -110,6 +114,7 @@ export const events: EventModel[] = [
     ],
   },
   {
+    id: 3,
     title: "AI in Healthcare Seminar",
     description: "Exploring the impact of AI on modern healthcare practices.",
     date: "2025-04-05",
@@ -122,7 +127,7 @@ export const events: EventModel[] = [
     attendances: [
       {
         id: 4,
-        userId: 3,
+        userId: "1f1b8c4d-dbee-451e-b1d1-7087051b5e45", // Emily Brown
         eventId: 3,
         attendedAt: "2025-04-05T14:10:00",
         rating: 4,
@@ -133,6 +138,7 @@ export const events: EventModel[] = [
     ],
   },
   {
+    id: 4,
     title: "Art & Music Festival",
     description: "A celebration of local art and live music performances.",
     date: "2025-05-20",
@@ -145,6 +151,7 @@ export const events: EventModel[] = [
     attendances: [],
   },
   {
+    id: 5,
     title: "Charity Fun Run",
     description: "A 5K run to raise funds for community welfare projects.",
     date: "2025-06-18",
@@ -157,3 +164,4 @@ export const events: EventModel[] = [
     attendances: [],
   },
 ];
+

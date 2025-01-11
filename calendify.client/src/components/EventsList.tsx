@@ -1,7 +1,6 @@
 import type { eventProps, EventModel, eventDetailsProps } from "./Event.state";
 import "../EventCard.css";
 import { useState } from "react";
-
 import {
   Card,
   CardContent,
@@ -9,25 +8,28 @@ import {
   List,
   ListItem,
   ListItemText,
-  CardActionArea,
   CardActions,
   Button,
 } from "@mui/material";
+import { useSession } from "../SessionContext"; // Gebruik de sessie om ingelogde gebruiker op te halen
 
+// ✅ EventList component
 export const EventList = ({ Events }: { Events: EventModel[] }) => {
   return (
     <div>
       <List>
-        {Events.map((ev, index) => {
-          return <EventCard key={index} id={index} event={ev} />;
+        {Events.map((ev) => {
+          return <EventCard key={ev.id} id={ev.id} event={ev} />;
         })}
       </List>
     </div>
   );
 };
 
+// ✅ EventCard component
 const EventCard = ({ id, event }: eventProps) => {
   const [eventIsOpen, setEventIsOpen] = useState<boolean>(false);
+
   const handleClickEventCard = () => {
     openEvent();
   };
@@ -35,17 +37,17 @@ const EventCard = ({ id, event }: eventProps) => {
   const date = event.date.split("-");
   const openEvent = () => setEventIsOpen(true);
   const closeEvent = () => setEventIsOpen(false);
+
   if (!eventIsOpen) {
     return (
       <Card className="EventCard" key={id}>
         <CardContent>
           <Typography variant={"h5"}>{event.title}</Typography>
-          <Typography>Caregory: {event.category}</Typography>
-          {}
+          <Typography>Category: {event.category}</Typography>
           <Typography>
             Date: {date[2]}-{date[1]}-{date[0]}
           </Typography>
-          <br></br>
+          <br />
           <CardActions
             onClick={handleClickEventCard}
             sx={{
@@ -62,44 +64,83 @@ const EventCard = ({ id, event }: eventProps) => {
   return <EventDetails id={id} event={event} closeEvent={closeEvent} />;
 };
 
+// ✅ EventDetails component
 const EventDetails = ({ id, event, closeEvent }: eventDetailsProps) => {
-  // const [Submitted, setIsSubmitted] = useState(false);
-  const date = event.date.split("-");
+  const { session } = useSession();
+  const [message, setMessage] = useState<string>("");
+
+  // Functie om een event bij te wonen
+  const handleSubmitAttendance = async () => {
+    console.log("Session data:", session);
+    if (!session?.user) {
+      setMessage("You need to be logged in to attend this event.");
+      return;
+    }
+
+    try {
+      const response = await fetch("/EventAttendance/Attend", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: session.user.id,
+          eventId: event.id,
+        }),
+      });
+
+      if (response.ok) {
+        setMessage("Successfully attended the event!");
+      } else {
+        setMessage("Failed to attend the event.");
+      }
+    } catch (error) {
+      setMessage("An error occurred: " + (error as Error).message);
+    }
+  };
+
   return (
     <div key={id} className="EventDetails">
-      <Typography>{event.title}</Typography>
+      <Typography variant="h4">{event.title}</Typography>
       <Typography>Description: {event.description}</Typography>
       <Typography>
-        Date: {date[2]}-{date[1]}-{date[0]}
+        Date: {event.date.split("-").reverse().join("-")}
       </Typography>
       <Typography>Start time: {event.startTime}</Typography>
       <Typography>End time: {event.endTime}</Typography>
       <Typography>Max attendees: {event.maxAttendees}</Typography>
       <Typography>Category: {event.category}</Typography>
-      <Typography>
-        Attendances:
+
+      <Typography variant="h6">Attendances:</Typography>
+      <List>
         {event.attendances.map((attendance, index) => (
-          <ListItem key={index} disablePadding>
+          <ListItem key={index}>
             <ListItemText>
               {attendance.user.firstName} {attendance.user.lastName}
             </ListItemText>
           </ListItem>
         ))}
-      </Typography>
+      </List>
+
       <CardActions sx={{ justifyContent: "center" }}>
         <Button
           onClick={closeEvent}
           className="EventDetailButton"
-          sx={{ border: "1px solid", color: "dark", justifyContent: "center" }}
+          sx={{ border: "1px solid", justifyContent: "center" }}
         >
           Show less
         </Button>
         <Button
-          sx={{ border: "1px solid", color: "dark", justifyContent: "center" }}
+          onClick={handleSubmitAttendance}
+          sx={{ border: "1px solid", justifyContent: "center" }}
         >
-          Submit
+          Attend Event
         </Button>
       </CardActions>
+
+      {message && <Typography>{message}</Typography>}
     </div>
   );
 };
+
+export default EventDetails;

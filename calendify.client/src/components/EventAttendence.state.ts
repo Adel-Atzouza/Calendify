@@ -2,7 +2,7 @@ import { User } from "./User.state";
 
 export interface EventAttendanceModel {
   id: number;
-  userId: number;
+  userId: string;
   eventId: number;
   attendedAt: string;
   rating: number;
