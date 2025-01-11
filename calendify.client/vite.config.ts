@@ -52,7 +52,7 @@ export default defineConfig({
                 secure: false
             },
             '^/register': {
-                target: 'https://localhost:5165/',
+                target: 'https://localhost:5165/v2/',
                 secure: false
             },
             '^/login': {
@@ -62,7 +62,15 @@ export default defineConfig({
             '^/logout': {
                 target: 'https://localhost:5165/',
                 secure: false
-            }
+            },
+            '^/v2/settings': {
+                target: 'https://localhost:5165/',
+                secure: false
+            },
+            '^/manage/2fa': {
+                target: 'https://localhost:5165/',
+                secure: false
+            },
         },
         port: 5173,
         https: {
