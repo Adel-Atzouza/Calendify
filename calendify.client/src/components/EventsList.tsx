@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import { useSession } from "../SessionContext"; // Gebruik de sessie om ingelogde gebruiker op te halen
 
-// ✅ EventList component
 export const EventList = ({ Events }: { Events: EventModel[] }) => {
   return (
     <div>
@@ -70,50 +69,50 @@ const EventDetails = ({ id, event, closeEvent }: eventDetailsProps) => {
   const [message, setMessage] = useState<string>("");
 
   // Functie om een event bij te wonen
-  const handleSubmitAttendance = async () => {
-    console.log("Session data:", session);
-    if (!session?.user) {
-      setMessage("You need to be logged in to attend this event.");
-      return;
-    }
+  // const handleSubmitAttendance = async () => {
+  //   console.log("Session data:", session);
+  //   if (!session?.user) {
+  //     setMessage("You need to be logged in to attend this event.");
+  //     return;
+  //   }
 
-    try {
-      const response = await fetch("/EventAttendance/Attend", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: session.user.id,
-          eventId: event.id,
-        }),
-      });
+  //   try {
+  //     const response = await fetch("/EventAttendance/Attend", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         userId: session.user.id,
+  //         eventId: event.id,
+  //       }),
+  //     });
 
-      if (response.ok) {
-        setMessage("Successfully attended the event!");
-      } else {
-        setMessage("Failed to attend the event.");
-      }
-    } catch (error) {
-      setMessage("An error occurred: " + (error as Error).message);
-    }
-  };
+  //     if (response.ok) {
+  //       setMessage("Successfully attended the event!");
+  //     } else {
+  //       setMessage("Failed to attend the event.");
+  //     }
+  //   } catch (error) {
+  //     setMessage("An error occurred: " + (error as Error).message);
+  //   }
+  // };
 
   return (
     <div key={id} className="EventDetails">
-      <Typography variant="h4">{event.title}</Typography>
-      <Typography>Description: {event.description}</Typography>
-      <Typography>
-        Date: {event.date.split("-").reverse().join("-")}
+      <Typography variant="h4" sx={{ color: "black" }}>
+        {event.title}
       </Typography>
+      <Typography>Description: {event.description}</Typography>
+      <Typography>Date: {event.date.split("-").reverse().join("-")}</Typography>
       <Typography>Start time: {event.startTime}</Typography>
       <Typography>End time: {event.endTime}</Typography>
       <Typography>Max attendees: {event.maxAttendees}</Typography>
       <Typography>Category: {event.category}</Typography>
 
-      <Typography variant="h6">Attendances:</Typography>
+      <Typography>Attendances:</Typography>
       <List>
-        {event.attendances.map((attendance, index) => (
+        {event.attendances?.map((attendance, index) => (
           <ListItem key={index}>
             <ListItemText>
               {attendance.user.firstName} {attendance.user.lastName}
@@ -130,10 +129,7 @@ const EventDetails = ({ id, event, closeEvent }: eventDetailsProps) => {
         >
           Show less
         </Button>
-        <Button
-          onClick={handleSubmitAttendance}
-          sx={{ border: "1px solid", justifyContent: "center" }}
-        >
+        <Button sx={{ border: "1px solid", justifyContent: "center" }}>
           Attend Event
         </Button>
       </CardActions>
