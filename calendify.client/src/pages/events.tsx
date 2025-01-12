@@ -4,10 +4,16 @@ import MyCalendar from '../components/Calendar';
 
 const Home: React.FC = () => {
   const events = [
-    { date: '2025-01-12', name: 'Meeting with Alex' },
-    { date: '2025-01-15', name: 'Project Deadline' },
-    { date: '2025-01-20', name: 'Birthday Party' }
+    { date: new Date('2025-01-12'), title: 'Meeting with Alex' },
+    { date: new Date('2025-01-15'), title: 'Project Deadline' },
+    { date: new Date('2025-01-20'), title: 'Birthday Party' }
   ];
+
+  // EXAMPLE
+  // const sampleEvents = [
+  //   { date: new Date(), title: 'Meeting with Client' },
+  //   { date: new Date('2025-01-10'), title: 'Project Deadline' },
+  // ];
 
   return (
     <div>
