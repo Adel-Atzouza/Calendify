@@ -1,6 +1,6 @@
-@Calendify.Server_HostAddress = https://localhost:5165
+# @Calendify.Server_HostAddress = http://localhost:5165
 
-POST {{Calendify.Server_HostAddress}}/login/
-Accept: application/json
+# GET {{Calendify.Server_HostAddress}}/weatherforecast/
+# Accept: application/json
 
 ###

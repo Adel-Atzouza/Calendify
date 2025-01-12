@@ -21,13 +21,6 @@ import OptionsMenu from '../components/OptionsMenu';
 
 
 
-
-
-
-
-
-
-
 function AccountSidebarPreview(props: AccountPreviewProps & { mini: boolean }) {
   const { handleClick, open, mini } = props;
   return (

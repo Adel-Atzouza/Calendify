@@ -4,10 +4,10 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import EventIcon from '@mui/icons-material/Event';
 
 import { AppProvider } from '@toolpad/core/react-router-dom';
-import type { Navigation, Session } from '@toolpad/core';
+import type { Branding, Navigation, Session } from '@toolpad/core';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { SessionContext } from './SessionContext';
-
+import { BrandingContext } from './shared/context';
 import React from 'react';
 
 
@@ -72,10 +72,20 @@ const customTheme = createTheme({
 export default function AppProviderTheme() {
 
   const [session, setSession] = React.useState<Session | null>(null);
+  const [branding, setBranding] = React.useState<Branding | null>({
+    title: "Calendify",
+    logo: <EventIcon style={{ width: 30, height: 40, color: customTheme.palette.primary.main }} />
+  });
+
 
   const sessionContextValue = React.useMemo(
     () => ({ session, setSession }),
     [session, setSession],
+  );
+
+  const brandingContextValue = React.useMemo(
+    () => ({ branding, setBranding }),
+    [branding, setBranding],
   );
 
   const navigate = useNavigate();
@@ -94,19 +104,18 @@ export default function AppProviderTheme() {
 
   return (
     <SessionContext.Provider value={sessionContextValue}>
-      <AppProvider
-        navigation={NAVIGATION}
-        theme={customTheme}
-        branding={{
-          title: "Calendify",
-          logo: <EventIcon style={{ width: 30, height: 40, color: customTheme.palette.primary.main }} />
-        }}
-        session={session}
-        authentication={{ signIn, signOut }}
+      <BrandingContext.Provider value={brandingContextValue}>
+        <AppProvider
+          navigation={NAVIGATION}
+          theme={customTheme}
+          branding={branding}
+          session={session}
+          authentication={{ signIn, signOut }}
 
-      >
-        <Outlet />
-      </AppProvider>
+        >
+          <Outlet />
+        </AppProvider>
+      </BrandingContext.Provider>
     </SessionContext.Provider>
   );
 }

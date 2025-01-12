@@ -9,6 +9,8 @@ namespace Calendify.Server.Data
 
     public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
+        public DbSet<Event> Events { get; set; }
+        public DbSet<EventAttendanceModel> EventAttendances { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
@@ -27,9 +29,30 @@ namespace Calendify.Server.Data
                     Id = "4d5a7d6c-6df4-4d72-9373-91fdb8a541e0",
                     Name = "Admin",
                     NormalizedName = "ADMIN"
-                }
+                },
+                new IdentityRole
+                {
+                    Id = "4ddkeh7e-6df4-4d72-9373-9dede8a541e0",
+                    Name = "User",
+                    NormalizedName = "USER"
+                },
             };
             builder.Entity<IdentityRole>().HasData(roles);
+
+
+            builder.Entity<EventAttendanceModel>()
+                .HasOne(ea => ea.User)
+                .WithMany()
+                .HasForeignKey(ea => ea.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<EventAttendanceModel>()
+                .HasOne(ea => ea.Event)
+                .WithMany()
+                .HasForeignKey(ea => ea.EventId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<EventAttendanceModel>().HasKey(ea => new { ea.UserId, ea.EventId });
         }
     }
 }

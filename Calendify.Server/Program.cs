@@ -11,12 +11,19 @@ namespace Calendify.Server
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var configuration = builder.Configuration;
 
             builder.Services.AddAuthorization();
 
             builder.Services.AddIdentityApiEndpoints<AppUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            
+            builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = configuration["ClientId"];
+                googleOptions.ClientSecret = configuration["ClientSecret"];
+            });
             
             // builder.Services.AddIdentity<AppUser, IdentityRole>()
             //     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -26,6 +33,8 @@ namespace Calendify.Server
                 options => options.UseSqlite(ConnectionString));
             builder.Services.AddScoped<AttendanceService>();
             builder.Services.AddScoped<UserService>();
+            builder.Services.AddScoped<EventattendanceService>();
+            builder.Services.AddScoped<IEventService, EventService>();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -37,6 +46,7 @@ namespace Calendify.Server
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
+            app.UseAuthentication();
             app.UseAuthorization();
             app.MapIdentityApi<AppUser>();
 
