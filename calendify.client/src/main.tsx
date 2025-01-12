@@ -9,7 +9,7 @@ import Layout from './layouts/dashboard';
 
 import DashboardPage from './pages/index.tsx';
 import EventsPage from './pages/events.tsx';
-import AttendancePage from './pages/OfficeAttendance.tsx';
+import attendance from './pages/attendance.tsx';
 import SignInPage from './pages/signIn';
 import SignUpPage from './pages/signUp.tsx';
 
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
           },
           {
             path: 'Attendance',
-            Component: AttendancePage,
+            Component: attendance,
           },
         ],
       },

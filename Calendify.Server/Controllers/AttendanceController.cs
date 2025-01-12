@@ -18,17 +18,30 @@ namespace Calendify.Server.Controllers
         }
 
         // Create Attendance
-        [HttpPost]
-        public async Task<IActionResult> PostAttendance([FromBody] Attendance attendance)
-        {
-            if (attendance == null || string.IsNullOrEmpty(attendance.UserId) || attendance.Date == default)
-            {
-                return BadRequest("Invalid attendance data.");
-            }
-            var createdAttendance = await _attendanceService.AddAttendanceAsync(attendance);
-            return CreatedAtAction(nameof(GetAttendance), new { id = createdAttendance.Id }, createdAttendance);
-        }
+        // [HttpPost]
+        // public async Task<IActionResult> PostAttendance([FromBody] Attendance attendance)
+        // {
+        //     if (attendance == null || string.IsNullOrEmpty(attendance.UserId) || attendance.Date == default)
+        //     {
+        //         return BadRequest("Invalid attendance data.");
+        //     }
+        //     var createdAttendance = await _attendanceService.AddAttendanceAsync(attendance);
+        //     return CreatedAtAction(nameof(GetAttendance), new { id = createdAttendance.Id }, createdAttendance);
+        // }
 
+        [HttpPost("add")]
+        public async Task<IActionResult> AddAttendance([FromBody] Attendance attendance)
+        {
+            try
+            {
+                var createdAttendance = await _attendanceService.AddAttendanceAsync(attendance);
+                return Ok(createdAttendance);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
 
         // Delete Attendance
         [HttpDelete("{id}")]

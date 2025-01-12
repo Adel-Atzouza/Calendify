@@ -14,21 +14,41 @@ namespace Calendify.Server.Services
         }
 
         // Voeg een Attendance toe (dit blijft ongewijzigd)
+        // public async Task<Attendance> AddAttendanceAsync(Attendance attendance)
+        // {
+        //     attendance.Date = DateTime.UtcNow;
+
+        //     // Ensure UserId is valid before saving
+        //     if (string.IsNullOrEmpty(attendance.UserId))
+        //     {
+        //         throw new Exception("UserId must be provided.");
+        //     }
+
+        //     _context.Attendances.Add(attendance);
+        //     await _context.SaveChangesAsync();
+        //     return attendance;
+        // }
+
         public async Task<Attendance> AddAttendanceAsync(Attendance attendance)
         {
-            attendance.Date = DateTime.UtcNow;
+            // Validatie: controleer of EndTime na StartTime ligt
+            if (attendance.EndTime <= attendance.StartTime)
+            {
+                throw new Exception("End time must be after start time.");
+            }
 
-            // Ensure UserId is valid before saving
+            // Validatie: controleer of de UserId geldig is
             if (string.IsNullOrEmpty(attendance.UserId))
             {
                 throw new Exception("UserId must be provided.");
             }
 
+            attendance.Date = DateTime.UtcNow;  // Datum wordt automatisch op de huidige tijd gezet
+
             _context.Attendances.Add(attendance);
             await _context.SaveChangesAsync();
             return attendance;
         }
-
 
         // Verwijder een Attendance (dit blijft ongewijzigd)
         public async Task<bool> DeleteAttendanceAsync(int id)
@@ -54,8 +74,11 @@ namespace Calendify.Server.Services
                 {
                     Id = a.Id,
                     UserId = a.UserId,  // Alleen de UserId, niet het volledige User object
+                    Title = a.Title,
                     Description = a.Description,
-                    Date = a.Date
+                    Date = a.Date,
+                    StartTime = a.StartTime,
+                    EndTime = a.EndTime,
                 })
                 .FirstOrDefaultAsync();  // Retourneer null als geen Attendance gevonden is
         }
