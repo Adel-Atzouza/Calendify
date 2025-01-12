@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // Import the styles
+import './Calendar.css'; // Import the styles
 
 interface CalendarEvent {
   date: Date;
@@ -25,12 +25,8 @@ const MyCalendar: React.FC<Props> = ({ events = [] }) => {
   };
 
   return (
-    <div>
+    <div className="calendarContainer">
       <Calendar onChange={handleDateChange} value={value} />
-      <div>
-        <h3>Events on {value instanceof Date ? value.toDateString() : 'these dates'}:</h3>
-        <ul>{renderEventsForDate(value as Date)}</ul>
-      </div>
     </div>
   );
 };
