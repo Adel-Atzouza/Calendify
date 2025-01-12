@@ -24,7 +24,13 @@ namespace Calendify.Server.Data
                     Id = "4d5a7d6c-6df4-4d72-9373-91fdb8a541e0",
                     Name = "Admin",
                     NormalizedName = "ADMIN"
-                }
+                },
+                new IdentityRole
+                {
+                    Id = "4ddkeh7e-6df4-4d72-9373-9dede8a541e0",
+                    Name = "User",
+                    NormalizedName = "USER"
+                },
             };
             builder.Entity<IdentityRole>().HasData(roles);
 

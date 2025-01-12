@@ -2,6 +2,7 @@ using Calendify.Server.Models;
 using Calendify.Server.Data;
 namespace Calendify.Server.Services
 {
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
     public class EventService : IEventService
@@ -25,11 +26,11 @@ namespace Calendify.Server.Services
                 return null;
             }
         }
-        public async Task<bool> PostEvent(Event _event)
+        public async Task<int> PostEvent(Event _event)
         {
             await _context.Events.AddAsync(_event);
             int AffectedRows = await _context.SaveChangesAsync();
-            return AffectedRows > 0;
+            return AffectedRows > 0 ? _event.Id : 0;
         }
         public async Task<bool> PutEvent(int id, Event _event)
         {
@@ -50,9 +51,17 @@ namespace Calendify.Server.Services
                 return false;
             }
 
-
-
-
+        }
+        public async Task<bool> ApproveEvent(int EventId)
+        {
+            Event EventFound = await _context.Events.FindAsync(EventId);
+            if (EventFound == null)
+            {
+                return false;
+            }
+            EventFound.AdminApproval = true;
+            await _context.SaveChangesAsync();
+            return true;
         }
         public async Task<bool> DeleteEvent(int id)
         {
