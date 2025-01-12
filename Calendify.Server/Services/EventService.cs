@@ -2,6 +2,7 @@ using Calendify.Server.Models;
 using Calendify.Server.Data;
 namespace Calendify.Server.Services
 {
+    using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
@@ -72,5 +73,9 @@ namespace Calendify.Server.Services
             return AffectedRows == 1;
         }
 
+        public async Task<List<Event>?> GetAllEvents(int PageNumber, int PageSize)
+        {
+            return await _context.Events.Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
+        }
     }
 }
