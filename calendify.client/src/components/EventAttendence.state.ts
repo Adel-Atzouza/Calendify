@@ -1,14 +1,14 @@
 import { User } from "./User.state";
 
-export type EventAttendanceModel = {
+export interface EventAttendanceModel {
   id: number;
-  userId: number;
+  userId: string;
   eventId: number;
   attendedAt: string;
   rating: number;
   feedback?: string;
   user: User;
-  event: Event;
-};
+  event: Event | null;
+}
 
 export type eventAttendenceProps = { eventAttendence: EventAttendanceModel };
