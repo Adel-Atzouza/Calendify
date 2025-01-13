@@ -32,20 +32,6 @@ namespace Calendify.Controllers
             };
         }
 
-        // [HttpPost("SubmitReview")]
-        // public async Task<IActionResult> SubmitReview([FromBody] int userId, [FromBody] int eventId, [FromBody] int rating, [FromBody] string feedback)
-        // {
-        //     if (userId <= 0 || eventId <= 0 || rating < 1 || rating > 5 || string.IsNullOrEmpty(feedback))
-        //         return BadRequest("Invalid input data.");
-
-        //     var result = await _eventattendanceService.SubmitReview(userId, eventId, rating, feedback);
-
-        //     if (result == "Attendance not found. User did not attend this event.")
-        //         return NotFound(result);
-
-        //     return Ok(result); // "Review submitted successfully."
-        // }
-
 
         // GET: View Attendees
         [HttpGet("{eventId}/Attendees")]
