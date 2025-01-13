@@ -16,8 +16,8 @@ export interface EventModel {
 }
 
 export interface EventPage {
-  Events: EventModel[];
-  IsLastPage: boolean;
+  events: EventModel[];
+  isLastPage: boolean;
 }
 
 export type eventDetailsProps = {

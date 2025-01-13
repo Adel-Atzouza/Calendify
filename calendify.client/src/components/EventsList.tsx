@@ -14,6 +14,7 @@ import {
 import { useSession } from "../SessionContext"; // Gebruik de sessie om ingelogde gebruiker op te halen
 
 export const EventList = ({ Events }: { Events: EventModel[] }) => {
+  console.log(Events);
   return (
     <div>
       <List>

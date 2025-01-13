@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { EventModel } from "./Event.state";
+import { EventModel, EventPage } from "./Event.state";
 import { EventList } from "./EventsList";
 import Loading from "./Loading";
 import { Button, CardActions, Typography } from "@mui/material";
@@ -7,8 +7,17 @@ import { Button, CardActions, Typography } from "@mui/material";
 export function GetAllEvents() {
   const [Error, setError] = useState("");
   const [Events, setEvents] = useState<EventModel[]>([]);
+  const [isLastPage, setIsLastPage] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
+
+  function handleClickPrevious() {
+    setPage(page - 1);
+  }
+
+  function handleClickNext() {
+    setPage(page + 1);
+  }
 
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -21,8 +30,10 @@ export function GetAllEvents() {
           signal: abortControllerRef.current?.signal,
         });
         setIsLoading(true);
-        const result = (await response.json()) as EventModel[];
-        setEvents(result);
+        const result = (await response.json()) as EventPage;
+
+        setIsLastPage(result.isLastPage);
+        setEvents(result.events);
       } catch (e: any) {
         if (e.name == "AbortError") {
           console.log("Aborted");
@@ -49,9 +60,13 @@ export function GetAllEvents() {
           justifyContent: "center",
         }}
       >
-        <Button onClick={() => setPage(page - 1)}>Previous Page</Button>
+        <Button onClick={handleClickPrevious} disabled={page === 1}>
+          Previous Page
+        </Button>
         <Typography>{page}</Typography>
-        <Button onClick={() => setPage(page + 1)}>Next Page</Button>
+        <Button onClick={handleClickNext} disabled={isLastPage}>
+          Next Page
+        </Button>
       </CardActions>
     </div>
   );
