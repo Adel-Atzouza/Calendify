@@ -15,10 +15,10 @@ export interface EventModel {
   attendances: EventAttendanceModel[];
 }
 
-export type eventProps = {
-  id: number;
-  event: EventModel;
-};
+export interface EventPage {
+  Events: EventModel[];
+  IsLastPage: boolean;
+}
 
 export type eventDetailsProps = {
   id: number;

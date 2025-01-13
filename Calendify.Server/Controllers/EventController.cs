@@ -25,9 +25,9 @@ namespace Calendify.Controllers
         [HttpGet("Events")]
         public async Task<IActionResult> GetAllEvnets([FromQuery] int PageNumber = 1, int PageSize = 5)
         {
-            List<Event> Page = await _eventService.GetAllEvents(PageNumber, PageSize);
-
-            IActionResult response = Page.Count != 0 ? Ok(Page) : NotFound();
+            EventPage? Page = await _eventService.GetAllEvents(PageNumber, PageSize);
+            if (Page is null) return NotFound("");
+            IActionResult response = Page.Events.Count != 0 ? Ok(Page) : NotFound();
             return response;
         }
         [HttpPost()]

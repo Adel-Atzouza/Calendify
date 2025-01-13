@@ -1,4 +1,4 @@
-import type { eventProps, EventModel, eventDetailsProps } from "./Event.state";
+import type { EventModel, eventDetailsProps } from "./Event.state";
 import "../EventCard.css";
 import { useState } from "react";
 import {
@@ -18,7 +18,7 @@ export const EventList = ({ Events }: { Events: EventModel[] }) => {
     <div>
       <List>
         {Events.map((ev) => {
-          return <EventCard key={ev.id} id={ev.id} event={ev} />;
+          return <EventCard key={ev.id} Event={ev} />;
         })}
       </List>
     </div>
@@ -26,23 +26,23 @@ export const EventList = ({ Events }: { Events: EventModel[] }) => {
 };
 
 // ✅ EventCard component
-const EventCard = ({ id, event }: eventProps) => {
+const EventCard = ({ Event }: { Event: EventModel }) => {
   const [eventIsOpen, setEventIsOpen] = useState<boolean>(false);
 
   const handleClickEventCard = () => {
     openEvent();
   };
 
-  const date = event.date.split("-");
+  const date = Event.date.split("-");
   const openEvent = () => setEventIsOpen(true);
   const closeEvent = () => setEventIsOpen(false);
 
   if (!eventIsOpen) {
     return (
-      <Card className="EventCard" key={id}>
+      <Card className="EventCard" key={Event.id}>
         <CardContent>
-          <Typography variant={"h5"}>{event.title}</Typography>
-          <Typography>Category: {event.category}</Typography>
+          <Typography variant={"h5"}>{Event.title}</Typography>
+          <Typography>Category: {Event.category}</Typography>
           <Typography>
             Date: {date[2]}-{date[1]}-{date[0]}
           </Typography>
@@ -60,7 +60,7 @@ const EventCard = ({ id, event }: eventProps) => {
       </Card>
     );
   }
-  return <EventDetails id={id} event={event} closeEvent={closeEvent} />;
+  return <EventDetails id={Event.id} event={Event} closeEvent={closeEvent} />;
 };
 
 // ✅ EventDetails component

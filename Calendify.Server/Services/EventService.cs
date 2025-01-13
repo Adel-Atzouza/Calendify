@@ -73,9 +73,16 @@ namespace Calendify.Server.Services
             return AffectedRows == 1;
         }
 
-        public async Task<List<Event>?> GetAllEvents(int PageNumber, int PageSize)
+        public async Task<EventPage?> GetAllEvents(int PageNumber, int PageSize)
         {
-            return await _context.Events.Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
+            List<Event> Events = await _context.Events.ToListAsync();
+            List<Event> CurrentPage = Events.Skip((PageNumber - 1) * PageSize).Take(PageSize).ToList();
+            bool isLastPage = false;
+            if (Events.Last().Id == CurrentPage.Last().Id)
+            {
+                isLastPage = true;
+            }
+            return new EventPage(CurrentPage, isLastPage);
         }
     }
 }
