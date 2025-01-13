@@ -34,7 +34,7 @@ const EventCard = ({ Event }: { Event: EventModel }) => {
     openEvent();
   };
 
-  const date = Event.date.split("-");
+  const date = new Date(Event.date);
   const openEvent = () => setEventIsOpen(true);
   const closeEvent = () => setEventIsOpen(false);
 
@@ -45,7 +45,8 @@ const EventCard = ({ Event }: { Event: EventModel }) => {
           <Typography variant={"h5"}>{Event.title}</Typography>
           <Typography>Category: {Event.category}</Typography>
           <Typography>
-            Date: {date[2]}-{date[1]}-{date[0]}
+            Date: {String(date.getDate())}-{String(date.getMonth() + 1)}-
+            {date.getFullYear()}
           </Typography>
           <br />
           <CardActions
@@ -68,6 +69,7 @@ const EventCard = ({ Event }: { Event: EventModel }) => {
 const EventDetails = ({ id, event, closeEvent }: eventDetailsProps) => {
   const { session } = useSession();
   const [message, setMessage] = useState<string>("");
+  const date = new Date(event.date);
 
   // Functie om een event bij te wonen
   // const handleSubmitAttendance = async () => {
@@ -105,7 +107,9 @@ const EventDetails = ({ id, event, closeEvent }: eventDetailsProps) => {
         {event.title}
       </Typography>
       <Typography>Description: {event.description}</Typography>
-      <Typography>Date: {event.date.split("-").reverse().join("-")}</Typography>
+      <Typography>
+        Date: {date.getDay()}-{date.getMonth()}-{date.getFullYear()}
+      </Typography>
       <Typography>Start time: {event.startTime}</Typography>
       <Typography>End time: {event.endTime}</Typography>
       <Typography>Max attendees: {event.maxAttendees}</Typography>

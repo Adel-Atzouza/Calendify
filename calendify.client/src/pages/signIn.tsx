@@ -57,7 +57,7 @@ function SignIn() {
                             }
                         })
                         return {};
-                    } 
+                    }
 
                     // Now check if the user is logged in
                     let response = await isLoggedIn("/pingauth", {
