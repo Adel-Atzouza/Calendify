@@ -11,7 +11,7 @@ namespace Calendify.Server.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }
-        public DateTime StartTime { get; set; }  // Gebruik TimeSpan voor tijd
-        public DateTime EndTime { get; set; }    // Gebruik TimeSpan voor tijd
+        public TimeSpan StartTime { get; set; }  // Gebruik TimeSpan voor tijd
+        public TimeSpan EndTime { get; set; }    // Gebruik TimeSpan voor tijd
     }
 }

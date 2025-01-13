@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import MyCalendar from '../components/Calendar';
+// import MyCalendar from '../components/Calendar';
 
 const Home: React.FC = () => {
   const events = [
@@ -18,7 +18,7 @@ const Home: React.FC = () => {
   return (
     <div>
       <h1>Welcome to the Dashboard</h1>
-      <MyCalendar events={events} />
+      {/* <MyCalendar events={events} /> */}
     </div>
   );
 };

@@ -82,5 +82,11 @@ namespace Calendify.Server.Services
                 })
                 .FirstOrDefaultAsync();  // Retourneer null als geen Attendance gevonden is
         }
+
+        public async Task<List<Attendance>> GetAllAttendancesAsync()
+        {
+            return await _context.Attendances.ToListAsync();
+        }
+
     }
 }
