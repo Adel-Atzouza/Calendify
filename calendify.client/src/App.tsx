@@ -25,11 +25,6 @@ const NAVIGATION: Navigation = [
     title: 'Events',
     icon: <EventIcon />,
   },
-  {
-    segment: 'Attendance',
-    title: 'Attendance',
-    icon: <EventIcon />,
-  },
 ];
 
 const customTheme = createTheme({

@@ -29,7 +29,7 @@ namespace Calendify.Server.Controllers
         //     return CreatedAtAction(nameof(GetAttendance), new { id = createdAttendance.Id }, createdAttendance);
         // }
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddAttendance([FromBody] Attendance attendance)
         {
             try
@@ -69,13 +69,5 @@ namespace Calendify.Server.Controllers
             // Return the AttendanceDTO (with only UserId and other fields)
             return Ok(attendance);
         }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAllAttendances()
-        {
-            var attendances = await _attendanceService.GetAllAttendancesAsync();
-            return Ok(attendances);
-        }
-
     }
 }
