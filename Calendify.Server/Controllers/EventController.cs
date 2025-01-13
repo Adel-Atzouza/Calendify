@@ -19,7 +19,19 @@ namespace Calendify.Controllers
             Event? _event = await _eventService.GetEvent(id);
             return _event == null ? NotFound($"Cannot find event with id: {id}") : Ok(_event);
         }
+<<<<<<< HEAD
         
+=======
+
+        [HttpGet("Events")]
+        public async Task<IActionResult> GetAllEvnets([FromQuery] int PageNumber = 1, int PageSize = 5)
+        {
+            List<Event> Page = await _eventService.GetAllEvents(PageNumber, PageSize);
+
+            IActionResult response = Page.Count != 0 ? Ok(Page) : NotFound();
+            return response;
+        }
+>>>>>>> origin/Mark
         [HttpPost()]
         public async Task<IActionResult> AddEvent([FromBody] Event _event)
         {

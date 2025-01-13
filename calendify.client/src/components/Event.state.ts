@@ -2,7 +2,11 @@ import { EventAttendanceModel } from "./EventAttendence.state";
 import { User } from "./User.state";
 
 export interface EventModel {
+<<<<<<< HEAD
   id: number; 
+=======
+  id: number;
+>>>>>>> origin/Mark
   title: string;
   description: string;
   date: string;
@@ -25,6 +29,7 @@ export type eventDetailsProps = {
   event: EventModel;
   closeEvent: () => void;
 };
+<<<<<<< HEAD
 
 export const users: User[] = [
   {
@@ -165,3 +170,5 @@ export const events: EventModel[] = [
   },
 ];
 
+=======
+>>>>>>> origin/Mark
