@@ -16,7 +16,7 @@ export const EventCard = ({ Event }: { Event: EventModel }) => {
     openEvent();
   };
 
-  const date = new Date(Event.date);
+  const date = new Date(Event.date).toDateString();
   const openEvent = () => setEventIsOpen(true);
   const closeEvent = () => setEventIsOpen(false);
 
@@ -26,10 +26,7 @@ export const EventCard = ({ Event }: { Event: EventModel }) => {
         <CardContent>
           <Typography variant={"h5"}>{Event.title}</Typography>
           <Typography>Category: {Event.category}</Typography>
-          <Typography>
-            Date: {String(date.getDate())}-{String(date.getMonth() + 1)}-
-            {date.getFullYear()}
-          </Typography>
+          <Typography>Date: {date}</Typography>
           <br />
           <CardActions
             onClick={handleClickEventCard}

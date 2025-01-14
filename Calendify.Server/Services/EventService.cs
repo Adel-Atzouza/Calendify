@@ -75,7 +75,7 @@ namespace Calendify.Server.Services
 
         public async Task<EventPage?> GetAllEvents(int PageNumber, int PageSize)
         {
-            List<Event> Events = await _context.Events.ToListAsync();
+            List<Event> Events = await _context.Events.OrderBy(_ => _.Date).ToListAsync();
             List<Event> CurrentPage = Events.Skip((PageNumber - 1) * PageSize).Take(PageSize).ToList();
             bool isLastPage = false;
             if (Events.Last().Id == CurrentPage.Last().Id)

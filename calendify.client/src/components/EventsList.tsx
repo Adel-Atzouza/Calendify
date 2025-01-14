@@ -4,7 +4,6 @@ import { List } from "@mui/material";
 import { EventCard } from "./EventCard";
 
 export const EventList = ({ Events }: { Events: EventModel[] }) => {
-  console.log(Events);
   return (
     <div>
       <List>
