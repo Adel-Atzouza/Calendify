@@ -20,31 +20,19 @@ namespace Calendify.Server.Controllers
             _userManager = userManager;
         }
 
-        // Create Attendance
-        // [HttpPost]
-        // public async Task<IActionResult> PostAttendance([FromBody] Attendance attendance)
-        // {
-        //     if (attendance == null || string.IsNullOrEmpty(attendance.UserId) || attendance.Date == default)
-        //     {
-        //         return BadRequest("Invalid attendance data.");
-        //     }
-        //     var createdAttendance = await _attendanceService.AddAttendanceAsync(attendance);
-        //     return CreatedAtAction(nameof(GetAttendance), new { id = createdAttendance.Id }, createdAttendance);
-        // }
-
         [HttpPost]
         public async Task<IActionResult> AddAttendance([FromBody] Attendance attendance)
         {
             try
             {
                 // Ensure the UserId is set in the attendance object
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                if (string.IsNullOrEmpty(userId))
+                var user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                if (string.IsNullOrEmpty(user.Id))
                 {
                     return BadRequest(new { message = "User is not authenticated." });
                 }
 
-                attendance.UserId = userId;  // Set the UserId in attendance object
+                attendance.UserId = user.Id;  // Set the UserId in attendance object
 
                 // Now proceed to add attendance
                 var createdAttendance = await _attendanceService.AddAttendanceAsync(attendance);

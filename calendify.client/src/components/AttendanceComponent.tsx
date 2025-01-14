@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button } from "@mui/material";
+import postAttendance from "./PostAttendance"; // Importeer de POST-methode
 
 interface CalendarEvent {
     date: Date;
@@ -13,9 +14,9 @@ interface AttendanceComponentProps {
     open: boolean;
     handleClose: () => void;
     handleAddEvent: (event: CalendarEvent) => void;
-    handleDelete?: () => void; // Optional delete function
+    handleDelete?: () => void;
     selectedDate: Date | null;
-    events: CalendarEvent[]; // Array of existing events
+    events: CalendarEvent[];
 }
 
 export const AttendanceComponent: React.FC<AttendanceComponentProps> = ({
@@ -38,19 +39,16 @@ export const AttendanceComponent: React.FC<AttendanceComponentProps> = ({
             normalizedDate.setHours(0, 0, 0, 0);
             setDate(normalizedDate.toLocaleDateString("en-CA"));
 
-            // Check if an event exists for the selected date
             const existingEvent = events.find(
                 (event) => event.date.toDateString() === normalizedDate.toDateString()
             );
 
             if (existingEvent) {
-                // Populate the form with existing event data
                 setTitle(existingEvent.title);
                 setDescription(existingEvent.description);
                 setStartTime(existingEvent.startTime);
                 setEndTime(existingEvent.endTime);
             } else {
-                // Clear the form if no event exists
                 setTitle("");
                 setDescription("");
                 setStartTime("");
@@ -75,31 +73,17 @@ export const AttendanceComponent: React.FC<AttendanceComponentProps> = ({
         };
 
         try {
-            const response = await fetch("/Attendance", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(newEvent),
-            });
-
-            if (!response.ok) {
-                throw new Error("Er is iets misgegaan bij het versturen van het verzoek.");
-            }
-
-            const data = await response.json();
-            console.log("Attendance succesvol toegevoegd:", data);
-            handleAddEvent(newEvent);
-            handleClose();
+            const data = await postAttendance(newEvent);
+            handleAddEvent(newEvent); // Update events in the parent
+            handleClose(); // Close the popup
         } catch (error) {
-            console.error("Er is een fout opgetreden bij het toevoegen van attendance:", error);
             alert("Er is een fout opgetreden bij het versturen van het evenement.");
         }
     };
 
     return (
         <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>{"Add Event"}</DialogTitle>
+            <DialogTitle>{title ? "Edit Event" : "Add Event"}</DialogTitle>
             <DialogContent>
                 <TextField
                     label="Title"
