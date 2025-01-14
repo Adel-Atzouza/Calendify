@@ -24,9 +24,18 @@ export const AddEventButton = (): JSX.Element => {
   };
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       <Typography>
-        <Fab onClick={handleClickAddButton} color="primary" aria-label="add">
+        <Fab
+          onClick={handleClickAddButton}
+          color="primary"
+          aria-label="add"
+          style={{
+            position: "absolute",
+            top: -70,
+            right: 10,
+          }}
+        >
           <AddIcon />
         </Fab>
       </Typography>
