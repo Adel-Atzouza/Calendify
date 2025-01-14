@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\HR\\Jaar 2\\Web dev\\Calendify\\Calendify.Server\\Calendify.Server.csproj": {}
+    "C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\Calendify.Server.csproj": {}
   },
   "projects": {
-    "C:\\HR\\Jaar 2\\Web dev\\Calendify\\Calendify.Server\\Calendify.Server.csproj": {
+    "C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\Calendify.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\HR\\Jaar 2\\Web dev\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
+        "projectUniqueName": "C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
         "projectName": "Calendify.Server",
-        "projectPath": "C:\\HR\\Jaar 2\\Web dev\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
-        "packagesPath": "C:\\Users\\marks\\.nuget\\packages\\",
-        "outputPath": "C:\\HR\\Jaar 2\\Web dev\\Calendify\\Calendify.Server\\obj\\",
+        "projectPath": "C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
+        "packagesPath": "C:\\Users\\sven\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\marks\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\sven\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"

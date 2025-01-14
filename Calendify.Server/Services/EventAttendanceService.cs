@@ -24,7 +24,7 @@ namespace Calendify.Server.Services
             var currentDate = DateTime.UtcNow;
             if (eventToAttend.Date < currentDate.Date || 
                 (eventToAttend.Date == currentDate.Date && eventToAttend.StartTime < currentDate.TimeOfDay))
-                return "Event has already started.";
+                return "Event has already started/Event is already finished.";
 
             int currentAttendees = await _context.EventAttendances.CountAsync(ea => ea.Event.Id == eventId);
             if (currentAttendees >= eventToAttend.MaxAttendees) return "Event is full.";

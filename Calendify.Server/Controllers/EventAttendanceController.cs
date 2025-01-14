@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Calendify.Server.Services;
 using Calendify.Server.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Calendify.Controllers
 {
@@ -8,10 +10,12 @@ namespace Calendify.Controllers
     public class EventAttendanceController : ControllerBase
     {
         private readonly EventattendanceService _eventattendanceService;
+        private readonly UserManager<AppUser> _userManager;
 
-        public EventAttendanceController(EventattendanceService eventattendanceService)
+        public EventAttendanceController(EventattendanceService eventattendanceService, UserManager<AppUser> userManager)
         {
             _eventattendanceService = eventattendanceService;
+            _userManager = userManager;
         }
 
         // ✅ POST: Attend Event
@@ -26,7 +30,7 @@ namespace Calendify.Controllers
             return result switch
             {
                 "Event not found." => NotFound(new { message = result }),
-                "Event has already started." => BadRequest(new { message = result }),
+                "Event has already started/Event is already finished." => BadRequest(new { message = result }),
                 "Event is full." => BadRequest(new { message = result }),
                 _ => Ok(new { message = result })
             };
@@ -43,10 +47,14 @@ namespace Calendify.Controllers
             return Ok(attendees);
         }
 
-        // ✅ GET: Get Attended Events by User ID
-        [HttpGet("{userId}/attendances")]
-        public async Task<IActionResult> GetAttendedEventsUserid(string userId)
+        // ✅ GET: Get Attended Events by current User ID
+        [HttpGet("attendances")]
+        public async Task<IActionResult> GetAttendedEventsUserid()
         {
+            var user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            var userId = user.Id;
+
             Console.WriteLine($"Received UserId: {userId}");
 
             var attendance = await _eventattendanceService.GetEventsForUser(userId);

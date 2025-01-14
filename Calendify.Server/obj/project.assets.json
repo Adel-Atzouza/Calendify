@@ -785,7 +785,7 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Razor.Language.dll": {}
         }
       },
-      "Microsoft.AspNetCore.SpaProxy/8.0.11": {
+      "Microsoft.AspNetCore.SpaProxy/8.0.12": {
         "type": "package",
         "compile": {
           "lib/net8.0/Microsoft.AspNetCore.SpaProxy.dll": {}
@@ -3926,10 +3926,10 @@
         "microsoft.aspnetcore.razor.language.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.SpaProxy/8.0.11": {
-      "sha512": "jwE/cg81t/FTZF1DOKpd90ztzZz6NNNHdo+vLUL4I2IzqL3e8Coo+2eR0KeD4ShbJm+3LNPXH9a6gYv/oP+aQQ==",
+    "Microsoft.AspNetCore.SpaProxy/8.0.12": {
+      "sha512": "3FCqH7rdZVENLCSbBwiX9K034j5fUbqh8qk14Etj4pROGZGqH/nzlFZ+LdT/S2MtpWJSOUJLTT72Xk/Jf6+UVw==",
       "type": "package",
-      "path": "microsoft.aspnetcore.spaproxy/8.0.11",
+      "path": "microsoft.aspnetcore.spaproxy/8.0.12",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3937,7 +3937,7 @@
         "THIRD-PARTY-NOTICES.TXT",
         "build/Microsoft.AspNetCore.SpaProxy.targets",
         "lib/net8.0/Microsoft.AspNetCore.SpaProxy.dll",
-        "microsoft.aspnetcore.spaproxy.8.0.11.nupkg.sha512",
+        "microsoft.aspnetcore.spaproxy.8.0.12.nupkg.sha512",
         "microsoft.aspnetcore.spaproxy.nuspec"
       ]
     },
@@ -7717,19 +7717,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\marks\\.nuget\\packages\\": {}
+    "C:\\Users\\sven\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\HR\\Jaar 2\\Web dev\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
+      "projectUniqueName": "C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
       "projectName": "Calendify.Server",
-      "projectPath": "C:\\HR\\Jaar 2\\Web dev\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
-      "packagesPath": "C:\\Users\\marks\\.nuget\\packages\\",
-      "outputPath": "C:\\HR\\Jaar 2\\Web dev\\Calendify\\Calendify.Server\\obj\\",
+      "projectPath": "C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
+      "packagesPath": "C:\\Users\\sven\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\marks\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\sven\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -7828,5 +7828,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

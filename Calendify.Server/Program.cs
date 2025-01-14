@@ -3,6 +3,8 @@ using Calendify.Server.Models;
 using Calendify.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Calendify.Services;
+
 
 namespace Calendify.Server
 {
@@ -43,6 +45,8 @@ namespace Calendify.Server
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<EventattendanceService>();
             builder.Services.AddScoped<IEventService, EventService>();
+            builder.Services.AddScoped<RecommendationService>();
+
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

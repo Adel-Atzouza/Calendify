@@ -11,6 +11,7 @@ namespace Calendify.Server.Data
     {
         public DbSet<Event> Events { get; set; }
         public DbSet<EventAttendanceModel> EventAttendances { get; set; }
+        public DbSet<UserEvents> UserEvents { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)

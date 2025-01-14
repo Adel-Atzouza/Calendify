@@ -4,10 +4,16 @@ import { useSession } from "../SessionContext";
 
 interface EventReviewFormProps {
   eventId: number;
+  onReviewSubmitted: () => void; // Callback om de parent te informeren
 }
 
-const EventReviewForm: React.FC<EventReviewFormProps> = ({ eventId }) => {
+const EventReviewForm: React.FC<EventReviewFormProps> = ({
+  eventId,
+  onReviewSubmitted,
+}) => {
   const { session } = useSession();
+  
+  // Gebruik hier een lokale state voor de rating:
   const [rating, setRating] = useState<number>(0);
   const [feedback, setFeedback] = useState<string>("");
   const [message, setMessage] = useState<string>("");
@@ -35,6 +41,12 @@ const EventReviewForm: React.FC<EventReviewFormProps> = ({ eventId }) => {
       const data = await response.json();
       if (response.ok) {
         setMessage("Review submitted successfully!");
+        // velden clearen
+        setRating(0);
+        setFeedback("");
+
+        // parent laten weten dat we succesvol hebben gepost
+        onReviewSubmitted();
       } else {
         setMessage(data.message || "Failed to submit review.");
       }

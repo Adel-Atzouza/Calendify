@@ -85,21 +85,25 @@ namespace Calendify.Controllers
                 return NotFound("No reviews found for this event.");
             }
 
-            return Ok(result);
+            return Ok(result);  // stuurt List<ReviewDto> naar de frontend
         }
+
 
         [HttpGet("Rating/{EventId}")]
         public async Task<IActionResult> GetRatingEvent(int EventId)
         {
-            var result = await _eventService.avgRatingEvent(EventId);
+            double result = await _eventService.GetAverageRating(EventId);
 
+            // Desnoods checken of result == 0 of geen rating
             if (result == 0)
             {
                 return NotFound("No rating found for this event.");
             }
 
+            // Let op: je returnt nu gewoon één getal, niet een list
             return Ok(result);
         }
+
 
 
 

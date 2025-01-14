@@ -85,29 +85,32 @@ namespace Calendify.Server.Services
             return new EventPage(CurrentPage, isLastPage);
         }
 
-        public async Task<List<string>> GetReviews(int EventId)
+        public async Task<List<ReviewDto>> GetReviews(int eventId)
         {
-            var review = await _context.EventAttendances
-                .Where(o => o.EventId == EventId)
-                .Select(o => o.Feedback)
+            var reviews = await _context.EventAttendances
+                .Where(ea => ea.EventId == eventId)
+                .Select(ea => new ReviewDto {
+                    UserId = ea.UserId,
+                    FirstName = ea.User.FirstName,
+                    LastName = ea.User.LastName,
+                    Rating = ea.Rating,
+                    Feedback = ea.Feedback
+                })
                 .ToListAsync();
 
-            return review;
+            return reviews;
         }
-
-        public async Task<double> avgRatingEvent(int EventId)
+        public async Task<double> GetAverageRating(int eventId)
         {
-            var ratings = await _context.EventAttendances
-                .Where(o => o.EventId == EventId)
-                .Select(o => o.Rating)
-                .ToListAsync();
+            double? avg = await _context.EventAttendances
+                .Where(x => x.EventId == eventId && x.Rating > 0)
+                .Select(x => (double?)x.Rating)  // cast naar double?
+                .AverageAsync();                 // geeft double? terug
 
-            if (ratings.Count == 0)
-            {
-                return 0;
-            }
-
-            return ratings.Average();
+            // Als avg null is, geef 0 terug
+            return avg ?? 0;
         }
+
+
     }
 }
