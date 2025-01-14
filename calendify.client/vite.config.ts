@@ -1,5 +1,4 @@
 import { fileURLToPath, URL } from "node:url";
-
 import { defineConfig } from "vite";
 import plugin from "@vitejs/plugin-react";
 import fs from "fs";
@@ -44,8 +43,8 @@ if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
 const target = env.ASPNETCORE_HTTPS_PORT
   ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}`
   : env.ASPNETCORE_URLS
-    ? env.ASPNETCORE_URLS.split(";")[0]
-    : "https://localhost:7258";
+  ? env.ASPNETCORE_URLS.split(";")[0]
+  : "https://localhost:7258";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -96,7 +95,12 @@ export default defineConfig({
       "^/EventAttendance": {
         target: "https://localhost:5165/",
         secure: false,
-      }
+      },
+      // ✅ Voeg deze toe voor /Recommendations
+      "^/Recommendations": {
+        target: "https://localhost:5165/",
+        secure: false,
+      },
     },
     port: 5173,
     https: {

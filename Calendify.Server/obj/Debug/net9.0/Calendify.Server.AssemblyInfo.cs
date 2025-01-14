@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Calendify.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+58959be70f9a41a9c07f022c3bc22ca4794687dd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+43d31b3e8ec8463006424da95b628146ae148cbb")]
 [assembly: System.Reflection.AssemblyProductAttribute("Calendify.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Calendify.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
