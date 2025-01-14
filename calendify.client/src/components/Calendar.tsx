@@ -18,6 +18,8 @@ const MyCalendar: React.FC<Props> = ({ events = [] }) => {
     setValue(date);
   };
 
+
+  
   // Helper to render event labels inside calendar tiles
   const renderEventLabel = (date: Date) => {
     const event = events.find(

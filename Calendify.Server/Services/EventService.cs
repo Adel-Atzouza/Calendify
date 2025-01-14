@@ -2,6 +2,7 @@ using Calendify.Server.Models;
 using Calendify.Server.Data;
 namespace Calendify.Server.Services
 {
+    using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
@@ -71,6 +72,45 @@ namespace Calendify.Server.Services
             int AffectedRows = await _context.SaveChangesAsync();
             return AffectedRows == 1;
         }
+
+        public async Task<EventPage?> GetAllEvents(int PageNumber, int PageSize)
+        {
+            List<Event> Events = await _context.Events.OrderBy(_ => _.Date).ToListAsync();
+            List<Event> CurrentPage = Events.Skip((PageNumber - 1) * PageSize).Take(PageSize).ToList();
+            bool isLastPage = false;
+            if (Events.Last().Id == CurrentPage.Last().Id)
+            {
+                isLastPage = true;
+            }
+            return new EventPage(CurrentPage, isLastPage);
+        }
+
+        public async Task<List<ReviewDto>> GetReviews(int eventId)
+        {
+            var reviews = await _context.EventAttendances
+                .Where(ea => ea.EventId == eventId)
+                .Select(ea => new ReviewDto {
+                    UserId = ea.UserId,
+                    FirstName = ea.User.FirstName,
+                    LastName = ea.User.LastName,
+                    Rating = ea.Rating,
+                    Feedback = ea.Feedback
+                })
+                .ToListAsync();
+
+            return reviews;
+        }
+        public async Task<double> GetAverageRating(int eventId)
+        {
+            double? avg = await _context.EventAttendances
+                .Where(x => x.EventId == eventId && x.Rating > 0)
+                .Select(x => (double?)x.Rating)  // cast naar double?
+                .AverageAsync();                 // geeft double? terug
+
+            // Als avg null is, geef 0 terug
+            return avg ?? 0;
+        }
+
 
     }
 }

@@ -27,12 +27,13 @@ namespace Calendify.Server.Controllers
         public async Task<IActionResult> PingAuth()
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var roles = await userManager.GetRolesAsync(user);
             var name = user.FirstName + " " + user.LastName;
             var image = user.ImgUrl;
 
-            return Ok(new { Email = email, Roles = roles, Name = name, Image = image });
+            return Ok(new {Id = userId, Email = email, Roles = roles, Name = name, Image = image,});
         }
 
         [HttpPost("AssignRoleToUser")]
