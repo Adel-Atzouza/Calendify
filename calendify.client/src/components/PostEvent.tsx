@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export interface postEventProps {
   title: string;
   description: string;
@@ -12,15 +14,21 @@ export interface postEventProps {
 const POSTURL = "Events/";
 
 export default async function PostEvent(props: postEventProps): Promise<void> {
+  const [] = useState();
+
+  const postOptions = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(props),
+  };
   try {
-    await fetch(POSTURL, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(props),
-    });
+    const response = await fetch(POSTURL, postOptions);
+    if (response?.status == 400) {
+      return;
+    }
   } catch (e) {
     console.log(e);
-  }
+  };
 }

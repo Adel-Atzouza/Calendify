@@ -1,20 +1,7 @@
 import { Fab, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
-import AddEvent from "./AddEvent";
-import { postEventProps } from "./PostEvent";
-
-let initialState: postEventProps = {
-  title: "",
-  description: "",
-  date: "",
-  startTime: "",
-  endTime: "",
-  location: "",
-  maxAttendees: 0,
-  category: "",
-  adminApproval: false,
-};
+import AddEvent from "./AddEventForm";
 
 export const AddEventButton = (): JSX.Element => {
   const [showAddEvent, setShowAddEvent] = useState(false);
@@ -39,7 +26,7 @@ export const AddEventButton = (): JSX.Element => {
           <AddIcon />
         </Fab>
       </Typography>
-      {showAddEvent && <AddEvent {...initialState} />}
+      {showAddEvent && <AddEvent />}
     </div>
   );
 };
