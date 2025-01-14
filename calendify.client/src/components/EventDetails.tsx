@@ -32,28 +32,31 @@ const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
   const [averageRating, setAverageRating] = useState<number>(0); // Verwijderen als je geen average rating meer wilt
   const { session } = useSession();
 
+  const eventEndTime = new Date(event.date);
+  const [endHour, endMinute] = event.endTime.split(":");
+  eventEndTime.setHours(parseInt(endHour, 10));
+  eventEndTime.setMinutes(parseInt(endMinute, 10));
+  const isEventOver = eventEndTime < new Date();
+
   async function handleDeleteEvent() {
     await requestDeleteEvent(id);
   }
-
-  // ✅ Haal de lijst met attendees op
-  useEffect(() => {
-    const fetchAttendances = async () => {
-      try {
-        const response = await fetch(`/EventAttendance/${id}/Attendees`);
-        if (response.ok) {
-          const data = await response.json();
-          setAttendances(data);
-        } else {
-          setMessage("Failed to fetch attendees.");
-        }
-      } catch (error) {
-        setMessage("An error occurred: " + (error as Error).message);
+  
+  // Attendances ophalen
+  const fetchAttendances = useCallback(async () => {
+    try {
+      const response = await fetch(`/EventAttendance/${id}/Attendees`);
+      if (response.ok) {
+        const data = await response.json();
+        setAttendances(data);
+      } else {
+        setMessage("Failed to fetch attendees.");
       }
     } catch (error) {
       setMessage("An error occurred: " + (error as Error).message);
     }
   }, [id]);
+
 
   // Reviews ophalen
   const fetchReviews = useCallback(async () => {
