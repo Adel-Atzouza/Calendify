@@ -43,8 +43,6 @@
 import React from "react";
 import Calendar from "react-calendar";
 import "./Calendar.css"; // Import the styles
-import { useSession } from "../SessionContext";
-import { Session } from "inspector";
 
 interface CalendarEvent {
   date: Date;
@@ -59,7 +57,7 @@ interface Props {
 const MyCalendar: React.FC<Props> = ({ events, onDateClick }) => {
   const [value, setValue] = React.useState<Date | Date[]>(new Date());
 
-  
+
   const handleDateChange = (date: Date | Date[]) => {
     setValue(date);
     if (date instanceof Date) {

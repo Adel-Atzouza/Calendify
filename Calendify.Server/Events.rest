@@ -38,7 +38,7 @@ Content-Type: application/json
 
 {
   "id": 0,
-  "userId": "string",
+  "userId": "",
   "title": "zebbi",
   "description": "zebbi",
   "date": "2025-01-14T09:22:31.841Z",

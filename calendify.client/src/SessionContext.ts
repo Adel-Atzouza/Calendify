@@ -8,7 +8,7 @@ export interface SessionContextValue {
 
 export const SessionContext = React.createContext<SessionContextValue>({
   session: {},
-  setSession: () => {},
+  setSession: () => { },
 });
 
 export function useSession() {

@@ -1,6 +1,7 @@
 using Calendify.Server.Models;
 using Calendify.Server.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -11,10 +12,12 @@ namespace Calendify.Server.Controllers
     public class AttendanceController : ControllerBase
     {
         private readonly AttendanceService _attendanceService;
+        public readonly UserManager<AppUser> _userManager;
 
-        public AttendanceController(AttendanceService attendanceService)
+        public AttendanceController(AttendanceService attendanceService, UserManager<AppUser> userManager)
         {
             _attendanceService = attendanceService;
+            _userManager = userManager;
         }
 
         // Create Attendance
@@ -34,6 +37,16 @@ namespace Calendify.Server.Controllers
         {
             try
             {
+                // Ensure the UserId is set in the attendance object
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return BadRequest(new { message = "User is not authenticated." });
+                }
+
+                attendance.UserId = userId;  // Set the UserId in attendance object
+
+                // Now proceed to add attendance
                 var createdAttendance = await _attendanceService.AddAttendanceAsync(attendance);
                 return Ok(createdAttendance);
             }
@@ -42,6 +55,7 @@ namespace Calendify.Server.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
 
         // Delete Attendance
         [HttpDelete("{id}")]
