@@ -6,12 +6,14 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useEffect } from "react";
 import { ApproveEvent } from "./ApproveEvent";
 import { EventDetailsProps } from "./Event.state";
 import { useSession } from "../SessionContext";
 import EventAttendanceForm from "./EventattendanceForm";
 import EventReviewForm from "./EventReviewForm";
+import { requestDeleteEvent } from "./DeleteEvent";
 
 const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
   const [message, setMessage] = useState<string>("");
@@ -21,6 +23,10 @@ const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
   const [averageRating, setAverageRating] = useState<number>(0); // ✅ Nieuw: gemiddelde beoordeling
   const { session } = useSession();
   const date = new Date(event.date);
+
+  async function handleDeleteEvent() {
+    await requestDeleteEvent(id);
+  }
 
   // ✅ Haal de lijst met attendees op
   useEffect(() => {
@@ -60,6 +66,10 @@ const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
 
   // ✅ Handle approve event
   async function handleApproveEvent() {
+    if (Date.parse(event.date) < Date.now()) {
+      setMessage("This event has already started");
+      return;
+    }
     setMessage("Processing approval...");
     try {
       await ApproveEvent(id);
@@ -114,12 +124,15 @@ const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
           Show less
         </Button>
         {session?.user?.roles?.includes("Admin") && (
-          <Button
-            onClick={handleApproveEvent}
-            sx={{ border: "1px solid", justifyContent: "center" }}
-          >
-            Approve Event
-          </Button>
+          <>
+            <Button
+              onClick={handleApproveEvent}
+              sx={{ border: "1px solid", justifyContent: "center" }}
+            >
+              Approve Event
+            </Button>
+            <DeleteIcon onClick={handleDeleteEvent} />
+          </>
         )}
       </CardActions>
 
