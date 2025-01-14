@@ -7717,26 +7717,11 @@
     ]
   },
   "packageFolders": {
-<<<<<<< HEAD
-    "C:\\Users\\cbr600f0\\.nuget\\packages\\": {}
-=======
     "C:\\Users\\sven\\.nuget\\packages\\": {}
->>>>>>> Mark
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-      "projectUniqueName": "Z:\\School\\Calendify\\calendify\\calendify.server\\Calendify.Server.csproj",
-      "projectName": "Calendify.Server",
-      "projectPath": "Z:\\School\\Calendify\\calendify\\calendify.server\\Calendify.Server.csproj",
-      "packagesPath": "C:\\Users\\cbr600f0\\.nuget\\packages\\",
-      "outputPath": "Z:\\School\\Calendify\\calendify\\calendify.server\\obj\\",
-      "projectStyle": "PackageReference",
-      "configFilePaths": [
-        "C:\\Users\\cbr600f0\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-=======
       "projectUniqueName": "C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
       "projectName": "Calendify.Server",
       "projectPath": "C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
@@ -7745,14 +7730,11 @@
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sven\\AppData\\Roaming\\NuGet\\NuGet.Config"
->>>>>>> Mark
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -7846,5 +7828,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
