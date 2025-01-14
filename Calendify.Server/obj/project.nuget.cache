@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0uZEGFHTHUA=",
+  "dgSpecHash": "cisk1BMbsIo=",
   "success": true,
-  "projectFilePath": "Z:\\School\\Calendify\\calendify\\calendify.server\\Calendify.Server.csproj",
+  "projectFilePath": "Z:\\School\\Calendify\\Calendify\\calendify.server\\Calendify.Server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\cbr600f0\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\cbr600f0\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

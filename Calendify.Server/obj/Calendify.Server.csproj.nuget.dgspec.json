@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "Z:\\School\\Calendify\\calendify\\calendify.server\\Calendify.Server.csproj": {}
+    "Z:\\School\\Calendify\\Calendify\\calendify.server\\Calendify.Server.csproj": {}
   },
   "projects": {
-    "Z:\\School\\Calendify\\calendify\\calendify.server\\Calendify.Server.csproj": {
+    "Z:\\School\\Calendify\\Calendify\\calendify.server\\Calendify.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "Z:\\School\\Calendify\\calendify\\calendify.server\\Calendify.Server.csproj",
+        "projectUniqueName": "Z:\\School\\Calendify\\Calendify\\calendify.server\\Calendify.Server.csproj",
         "projectName": "Calendify.Server",
-        "projectPath": "Z:\\School\\Calendify\\calendify\\calendify.server\\Calendify.Server.csproj",
+        "projectPath": "Z:\\School\\Calendify\\Calendify\\calendify.server\\Calendify.Server.csproj",
         "packagesPath": "C:\\Users\\cbr600f0\\.nuget\\packages\\",
-        "outputPath": "Z:\\School\\Calendify\\calendify\\calendify.server\\obj\\",
+        "outputPath": "Z:\\School\\Calendify\\Calendify\\calendify.server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\cbr600f0\\AppData\\Roaming\\NuGet\\NuGet.Config",

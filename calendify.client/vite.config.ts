@@ -96,6 +96,10 @@ export default defineConfig({
       "^/EventAttendance": {
         target: "https://localhost:5165/",
         secure: false,
+      },
+      "^/EventAttendance/attendances": {
+        target: "https://localhost:5165/",
+        secure: false,
       }
     },
     port: 5173,

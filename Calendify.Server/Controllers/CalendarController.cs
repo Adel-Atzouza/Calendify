@@ -1,28 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
-using Calendify.Server.Models; 
+using Calendify.Server.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Calendify.Server.Data;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
-namespace Calendify.Server.Controllers
+namespace Calendify.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class UserEventsController : ControllerBase
     {
-        public async Task<string> GetUserID(){
+        public async Task<string> GetUserID()
+        {
             var user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
             return user.Id;
         }
-        
+
         private readonly ApplicationDbContext _context;
         private readonly UserManager<AppUser> _userManager;
 
         public UserEventsController(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: api/UserEvents/{userId}
