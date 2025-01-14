@@ -7717,31 +7717,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\svenv\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\marks\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\svenv\\Downloads\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
+      "projectUniqueName": "C:\\HR\\Jaar 2\\Web dev\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
       "projectName": "Calendify.Server",
-      "projectPath": "C:\\Users\\svenv\\Downloads\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
-      "packagesPath": "C:\\Users\\svenv\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\svenv\\Downloads\\Calendify\\Calendify.Server\\obj\\",
+      "projectPath": "C:\\HR\\Jaar 2\\Web dev\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
+      "packagesPath": "C:\\Users\\marks\\.nuget\\packages\\",
+      "outputPath": "C:\\HR\\Jaar 2\\Web dev\\Calendify\\Calendify.Server\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\svenv\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\marks\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

@@ -82,11 +82,10 @@ const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
       <Typography>End time: {event.endTime}</Typography>
       <Typography>Max attendees: {event.maxAttendees}</Typography>
       <Typography>Category: {event.category}</Typography>
+      <Typography>Approved: {event.adminApproval ? "Yes" : "No"}</Typography>
       <Typography>
-        Approved: {event.adminApproval ? "Yes" : "No"}
-      </Typography>
-      <Typography>
-        Average Rating: {averageRating > 0 ? averageRating.toFixed(1) : "No ratings yet"} / 5
+        Average Rating:{" "}
+        {averageRating > 0 ? averageRating.toFixed(1) : "No ratings yet"} / 5
       </Typography>
 
       <Typography>Attendances:</Typography>
@@ -101,9 +100,6 @@ const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
       </List>
 
       {/* ✅ EventReviewForm voor het plaatsen van beoordelingen */}
-      <Typography variant="h6" sx={{ marginTop: "16px" }}>
-        Leave a Review
-      </Typography>
       <EventReviewForm eventId={id} />
 
       {/* EventAttendanceForm voor het bijwonen/annuleren van deelname */}

@@ -1,4 +1,4 @@
-import { TextField, Box, Button } from "@mui/material";
+import { TextField, Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import { postEventProps } from "./PostEvent";
 
@@ -53,7 +53,7 @@ export default function AddEventwFrom(): JSX.Element {
         });
       } else if (response.status === 400) {
         const errorData = await response.json();
-        setError(errorData.message || "Invalid input. Please check your data.");
+        setError(errorData.message || "Invalid input.");
       } else {
         setError("Something went wrong. Please try again later.");
       }
@@ -65,6 +65,7 @@ export default function AddEventwFrom(): JSX.Element {
   return (
     <Box className="AddEvent">
       <TextField
+        required
         id="title"
         className="input"
         label="Title"
@@ -73,6 +74,7 @@ export default function AddEventwFrom(): JSX.Element {
         fullWidth
       />
       <TextField
+        required
         id="description"
         className="input"
         label="Description"
@@ -81,6 +83,7 @@ export default function AddEventwFrom(): JSX.Element {
         fullWidth
       />
       <TextField
+        required
         id="date"
         className="input"
         type="date"
@@ -89,6 +92,7 @@ export default function AddEventwFrom(): JSX.Element {
         fullWidth
       />
       <TextField
+        required
         id="startTime"
         className="input"
         type="time"
@@ -97,6 +101,7 @@ export default function AddEventwFrom(): JSX.Element {
         fullWidth
       />
       <TextField
+        required
         id="endTime"
         className="input"
         type="time"
@@ -105,6 +110,7 @@ export default function AddEventwFrom(): JSX.Element {
         fullWidth
       />
       <TextField
+        required
         id="location"
         className="input"
         label="Location"
@@ -113,6 +119,7 @@ export default function AddEventwFrom(): JSX.Element {
         fullWidth
       />
       <TextField
+        required
         id="maxAttendees"
         className="input"
         label="Max Attendees"
@@ -122,6 +129,7 @@ export default function AddEventwFrom(): JSX.Element {
         fullWidth
       />
       <TextField
+        required
         id="category"
         className="input"
         label="Category"
@@ -132,6 +140,8 @@ export default function AddEventwFrom(): JSX.Element {
       <Button sx={{ justifyContent: "center" }} onClick={handleSubmit}>
         Add
       </Button>
+
+      {error && <Typography className="error-typography">{error}</Typography>}
     </Box>
   );
 }

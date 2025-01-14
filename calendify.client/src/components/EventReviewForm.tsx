@@ -45,8 +45,11 @@ const EventReviewForm: React.FC<EventReviewFormProps> = ({ eventId }) => {
 
   return (
     <div>
-      <Typography variant="h6">Leave a Review</Typography>
+      <Typography variant="h4" sx={{ color: "black" }}>
+        Leave a Review
+      </Typography>
       <TextField
+        sx={{ color: "black", border: "1px solid" }}
         label="Rating (1-5)"
         type="number"
         value={rating}
@@ -56,6 +59,8 @@ const EventReviewForm: React.FC<EventReviewFormProps> = ({ eventId }) => {
         margin="normal"
       />
       <TextField
+        sx={{ color: "black", border: "1px solid" }}
+        className="EventDetails"
         label="Feedback"
         value={feedback}
         onChange={(e) => setFeedback(e.target.value)}
@@ -64,8 +69,8 @@ const EventReviewForm: React.FC<EventReviewFormProps> = ({ eventId }) => {
         fullWidth
         margin="normal"
       />
-      <Button variant="contained" color="primary" onClick={handleSubmitReview}>
-        Submit Review
+      <Button sx={{ justifyContent: "center" }} onClick={handleSubmitReview}>
+        Submit review
       </Button>
       {message && <Typography color="error">{message}</Typography>}
     </div>

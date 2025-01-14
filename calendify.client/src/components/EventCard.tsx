@@ -22,7 +22,7 @@ export const EventCard = ({ Event }: { Event: EventModel }) => {
 
   if (!eventIsOpen) {
     return (
-      <Card className="EventCard" key={Event.id}>
+      <Card sx={{ marginY: 3 }} key={Event.id}>
         <CardContent>
           <Typography variant={"h5"}>{Event.title}</Typography>
           <Typography>Category: {Event.category}</Typography>
@@ -32,10 +32,29 @@ export const EventCard = ({ Event }: { Event: EventModel }) => {
             onClick={handleClickEventCard}
             sx={{
               justifyContent: "center",
-              border: "1px solid",
+              border: "2px solid #FFFFFF", // Thicker border for visibility
+              borderRadius: "8px", // Rounded corners
+              padding: "10px", // Add some padding for spacing
+              backgroundColor: "#2A3E59", // Dark blue background
+              transition: "all 0.3s ease", // Smooth hover animation
+              "&:hover": {
+                backgroundColor: "#3A6EA5", // Lighter blue on hover
+                transform: "scale(1.05)", // Slightly increase size on hover
+                boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)", // Add shadow on hover
+              },
             }}
           >
-            <Button>Show details</Button>
+            <Button
+              sx={{
+                color: "#FFFFFF", // White text
+                fontWeight: "bold", // Emphasized text
+                fontSize: "16px", // Slightly larger font
+                textTransform: "uppercase", // Make text uppercase
+                padding: "10px 20px", // Add padding to the button
+              }}
+            >
+              Show details
+            </Button>
           </CardActions>
         </CardContent>
       </Card>
