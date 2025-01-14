@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, colors, TextField, Typography } from "@mui/material";
 import { useSession } from "../SessionContext";
 
 interface EventReviewFormProps {
@@ -57,11 +57,11 @@ const EventReviewForm: React.FC<EventReviewFormProps> = ({
 
   return (
     <div>
-      <Typography variant="h4" sx={{ color: "black" }}>
+      <Typography  variant="h4" sx={{ color: "black" }}>
         Leave a Review
       </Typography>
       <TextField
-        sx={{ color: "black", border: "1px solid" }}
+        sx={{ color: "black" }}
         label="Rating (1-5)"
         type="number"
         value={rating}
@@ -71,7 +71,6 @@ const EventReviewForm: React.FC<EventReviewFormProps> = ({
         margin="normal"
       />
       <TextField
-        sx={{ color: "black", border: "1px solid" }}
         className="EventDetails"
         label="Feedback"
         value={feedback}

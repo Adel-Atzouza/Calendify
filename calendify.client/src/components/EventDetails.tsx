@@ -7,11 +7,13 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useState, useEffect, useCallback } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { ApproveEvent } from "./ApproveEvent";
 import { EventDetailsProps } from "./Event.state";
 import { useSession } from "../SessionContext";
 import EventAttendanceForm from "./EventattendanceForm";
 import EventReviewForm from "./EventReviewForm";
+import { requestDeleteEvent } from "./DeleteEvent";
 
 // Interface voor de reviews
 interface ReviewDto {
@@ -30,22 +32,23 @@ const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
   const [averageRating, setAverageRating] = useState<number>(0); // Verwijderen als je geen average rating meer wilt
   const { session } = useSession();
 
-  // Checken of event voorbij is
-  const eventEndTime = new Date(event.date);
-  const [endHour, endMinute] = event.endTime.split(":");
-  eventEndTime.setHours(parseInt(endHour, 10));
-  eventEndTime.setMinutes(parseInt(endMinute, 10));
-  const isEventOver = eventEndTime < new Date();
+  async function handleDeleteEvent() {
+    await requestDeleteEvent(id);
+  }
 
-  // Attendances ophalen
-  const fetchAttendances = useCallback(async () => {
-    try {
-      const response = await fetch(`/EventAttendance/${id}/Attendees`);
-      if (response.ok) {
-        const data = await response.json();
-        setAttendances(data);
-      } else {
-        setMessage("Failed to fetch attendees.");
+  // ✅ Haal de lijst met attendees op
+  useEffect(() => {
+    const fetchAttendances = async () => {
+      try {
+        const response = await fetch(`/EventAttendance/${id}/Attendees`);
+        if (response.ok) {
+          const data = await response.json();
+          setAttendances(data);
+        } else {
+          setMessage("Failed to fetch attendees.");
+        }
+      } catch (error) {
+        setMessage("An error occurred: " + (error as Error).message);
       }
     } catch (error) {
       setMessage("An error occurred: " + (error as Error).message);
@@ -96,6 +99,10 @@ const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
 
   // Admin: Approve event
   async function handleApproveEvent() {
+    if (Date.parse(event.date) < Date.now()) {
+      setMessage("This event has already started");
+      return;
+    }
     setMessage("Processing approval...");
     try {
       await ApproveEvent(id);
@@ -175,12 +182,15 @@ const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
           Show less
         </Button>
         {session?.user?.roles?.includes("Admin") && (
-          <Button
-            onClick={handleApproveEvent}
-            sx={{ border: "1px solid", justifyContent: "center" }}
-          >
-            Approve Event
-          </Button>
+          <>
+            <Button
+              onClick={handleApproveEvent}
+              sx={{ border: "1px solid", justifyContent: "center" }}
+            >
+              Approve Event
+            </Button>
+            <DeleteIcon onClick={handleDeleteEvent} />
+          </>
         )}
       </CardActions>
 
