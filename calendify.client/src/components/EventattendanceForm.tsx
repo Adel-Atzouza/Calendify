@@ -7,16 +7,18 @@ interface EventAttendanceFormProps {
   eventAttendances: { userId: string }[];
 }
 
-const EventAttendanceForm: React.FC<EventAttendanceFormProps> = ({ eventId, eventAttendances }) => {
+const EventAttendanceForm: React.FC<EventAttendanceFormProps> = ({
+  eventId,
+  eventAttendances,
+}) => {
   const { session } = useSession();
   const [message, setMessage] = useState<string>("");
 
-  // ✅ Controleer of de gebruiker al aanwezig is
+  // Check of de huidige gebruiker al ingeschreven is
   const isAttending = eventAttendances.some(
     (attendance) => attendance.userId === session?.user?.id
   );
 
-  // ✅ Handle the event attendance
   const handleAttendEvent = async () => {
     if (!session?.user) {
       setMessage("You need to be logged in to attend this event.");
@@ -38,13 +40,8 @@ const EventAttendanceForm: React.FC<EventAttendanceFormProps> = ({ eventId, even
       const data = await response.json();
 
       if (response.ok) {
-        // Check op de precieze message-tekst
-        if (data.message === "You are already attending this event.")
-          setMessage("You are already attending this event.");
-        else
-          setMessage("Successfully attended the event!");
+        setMessage(data.message || "Successfully attended the event!");
       } else {
-        // Anders (status niet OK), toon de fout
         setMessage(data.message || "Failed to attend the event.");
       }
     } catch (error) {
@@ -52,7 +49,6 @@ const EventAttendanceForm: React.FC<EventAttendanceFormProps> = ({ eventId, even
     }
   };
 
-  // ✅ Handle cancel attendance
   const handleCancelAttendance = async () => {
     if (!session?.user) return;
 
@@ -68,11 +64,11 @@ const EventAttendanceForm: React.FC<EventAttendanceFormProps> = ({ eventId, even
         }),
       });
 
+      const data = await response.json();
       if (response.ok) {
-        setMessage("Successfully canceled the attendance.");
+        setMessage(data.message || "Successfully canceled the attendance.");
       } else {
-        const errorData = await response.json();
-        setMessage(errorData.message || "Failed to cancel attendance.");
+        setMessage(data.message || "Failed to cancel attendance.");
       }
     } catch (error) {
       setMessage("An error occurred: " + (error as Error).message);

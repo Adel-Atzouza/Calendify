@@ -16,7 +16,7 @@ namespace Calendify.Server.Models
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Date is required.")]
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
 
         [Required(ErrorMessage = "StartTime is required.")]
         public TimeSpan StartTime { get; set; }
