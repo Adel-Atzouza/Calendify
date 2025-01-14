@@ -1,5 +1,4 @@
 import { EventAttendanceModel } from "./EventAttendence.state";
-import { User } from "./User.state";
 
 export interface EventModel {
   id: number;
@@ -15,12 +14,17 @@ export interface EventModel {
   attendances: EventAttendanceModel[];
 }
 
+export interface ApproveEventProps {
+  id: number;
+  event: Event;
+}
+
 export interface EventPage {
   events: EventModel[];
   isLastPage: boolean;
 }
 
-export type eventDetailsProps = {
+export type EventDetailsProps = {
   id: number;
   event: EventModel;
   closeEvent: () => void;

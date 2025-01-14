@@ -1,11 +1,11 @@
 import Typography from "@mui/material/Typography";
 import { GetAllEvents } from "../components/FetchEvents";
-
+import { AddEventButton } from "../components/AddEventButton";
 
 export default function DashboardPage() {
   return (
     <Typography>
-      Welcome to Toolpad!
+      <AddEventButton />
       <div>
         <GetAllEvents />
       </div>

@@ -89,6 +89,10 @@ export default defineConfig({
         target: "https://localhost:5165/",
         secure: false,
       },
+      "^/Events/Approve": {
+        target: "https://localhost:5165/",
+        secure: false,
+      },
     },
     port: 5173,
     https: {
