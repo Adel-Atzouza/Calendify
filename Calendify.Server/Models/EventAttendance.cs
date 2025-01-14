@@ -55,5 +55,15 @@ namespace Calendify.Server.Models
         public int EventId { get; set; }
     }
 
+    public class ReviewDto
+    {
+        public string UserId { get; set; }
+        public string FirstName { get; set; }   
+        public string LastName { get; set; }
+        public int Rating { get; set; }
+        public string? Feedback { get; set; }
+    }
+
+
 
 }

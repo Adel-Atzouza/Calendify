@@ -30,7 +30,7 @@ namespace Calendify.Controllers
             return result switch
             {
                 "Event not found." => NotFound(new { message = result }),
-                "Event has already started." => BadRequest(new { message = result }),
+                "Event has already started/Event is already finished." => BadRequest(new { message = result }),
                 "Event is full." => BadRequest(new { message = result }),
                 _ => Ok(new { message = result })
             };

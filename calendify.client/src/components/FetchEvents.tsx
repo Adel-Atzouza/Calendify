@@ -23,13 +23,13 @@ export function GetAllEvents() {
 
   useEffect(() => {
     const fetchEvents = async () => {
+      setIsLoading(true);
       abortControllerRef.current?.abort();
       abortControllerRef.current = new AbortController();
       try {
         const response = await fetch(`/Events/Events?PageNumber=${page}`, {
           signal: abortControllerRef.current?.signal,
         });
-        setIsLoading(true);
         const result = (await response.json()) as EventPage;
 
         setIsLastPage(result.isLastPage);
@@ -40,9 +40,8 @@ export function GetAllEvents() {
           return;
         }
         setError(`An error has occured`);
-      } finally {
-        setIsLoading(false);
       }
+      setIsLoading(false);
     };
     fetchEvents();
   }, [page]);

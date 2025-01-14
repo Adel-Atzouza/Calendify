@@ -7717,11 +7717,16 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\cbr600f0\\.nuget\\packages\\": {}
+=======
+    "C:\\Users\\sven\\.nuget\\packages\\": {}
+>>>>>>> Mark
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "Z:\\School\\Calendify\\calendify\\calendify.server\\Calendify.Server.csproj",
       "projectName": "Calendify.Server",
       "projectPath": "Z:\\School\\Calendify\\calendify\\calendify.server\\Calendify.Server.csproj",
@@ -7731,6 +7736,16 @@
       "configFilePaths": [
         "C:\\Users\\cbr600f0\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+=======
+      "projectUniqueName": "C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
+      "projectName": "Calendify.Server",
+      "projectPath": "C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
+      "packagesPath": "C:\\Users\\sven\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\sven\\AppData\\Roaming\\NuGet\\NuGet.Config"
+>>>>>>> Mark
       ],
       "originalTargetFrameworks": [
         "net9.0"
