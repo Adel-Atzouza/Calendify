@@ -11,13 +11,14 @@ import { useState } from "react";
 import { ApproveEvent } from "./ApproveEvent";
 import { EventDetailsProps } from "./Event.state";
 import { useSession } from "../SessionContext";
+import EventAttendanceForm from "./EventattendanceForm"; // Voeg deze import toe
 
 const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
   const [message, setMessage] = useState<string>("");
   const { session } = useSession();
   const date = new Date(event.date);
 
-  async function handlApproveEvent() {
+  async function handleApproveEvent() {
     setMessage("Processing approval...");
     try {
       await ApproveEvent(id);
@@ -34,19 +35,14 @@ const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
       </Typography>
       <Typography>Description: {event.description}</Typography>
       <Typography>
-        Date: {date.getDay()}-{date.getMonth()}-{date.getFullYear()}
+        Date: {date.getDate()}-{date.getMonth() + 1}-{date.getFullYear()}
       </Typography>
       <Typography>Start time: {event.startTime}</Typography>
       <Typography>End time: {event.endTime}</Typography>
       <Typography>Max attendees: {event.maxAttendees}</Typography>
       <Typography>Category: {event.category}</Typography>
       <Typography>
-        Approved:{" "}
-        {event.adminApproval ? (
-          <Typography>Yes</Typography>
-        ) : (
-          <Typography>No</Typography>
-        )}
+        Approved: {event.adminApproval ? "Yes" : "No"}
       </Typography>
 
       <Typography>Attendances:</Typography>
@@ -60,7 +56,10 @@ const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
         ))}
       </List>
 
-      <CardActions sx={{ justifyContent: "center" }}>
+      {/* EventAttendanceForm voor het bijwonen/annuleren van deelname */}
+      <EventAttendanceForm eventId={id} />
+
+      <CardActions sx={{ justifyContent: "center", marginTop: "16px" }}>
         <Button
           onClick={closeEvent}
           className="EventDetailButton"
@@ -68,12 +67,9 @@ const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
         >
           Show less
         </Button>
-        <Button sx={{ border: "1px solid", justifyContent: "center" }}>
-          Attend Event
-        </Button>
         {session?.user?.roles?.includes("Admin") && (
           <Button
-            onClick={handlApproveEvent}
+            onClick={handleApproveEvent}
             sx={{ border: "1px solid", justifyContent: "center" }}
           >
             Approve Event
@@ -81,7 +77,18 @@ const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
         )}
       </CardActions>
 
-      {message && <Typography>{message}</Typography>}
+      {message && (
+        <Typography
+          sx={{
+            fontSize: "12px",
+            marginTop: "8px",
+            color: "red",
+            textAlign: "center",
+          }}
+        >
+          {message}
+        </Typography>
+      )}
     </div>
   );
 };
