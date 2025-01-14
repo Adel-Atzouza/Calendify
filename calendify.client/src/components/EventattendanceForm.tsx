@@ -5,12 +5,16 @@ import { useSession } from "../SessionContext";
 interface EventAttendanceFormProps {
   eventId: number;
   eventAttendances: { userId: string }[];
-
 }
 
-const EventAttendanceForm: React.FC<EventAttendanceFormProps> = ({ eventId, eventAttendances}) => {
+const EventAttendanceForm: React.FC<EventAttendanceFormProps> = ({ eventId, eventAttendances }) => {
   const { session } = useSession();
   const [message, setMessage] = useState<string>("");
+
+  // ✅ Controleer of de gebruiker al aanwezig is
+  const isAttending = eventAttendances.some(
+    (attendance) => attendance.userId === session?.user?.id
+  );
 
   // ✅ Handle the event attendance
   const handleAttendEvent = async () => {
@@ -18,7 +22,7 @@ const EventAttendanceForm: React.FC<EventAttendanceFormProps> = ({ eventId, even
       setMessage("You need to be logged in to attend this event.");
       return;
     }
-  
+
     try {
       const response = await fetch("/EventAttendance/Attend", {
         method: "POST",
@@ -30,10 +34,9 @@ const EventAttendanceForm: React.FC<EventAttendanceFormProps> = ({ eventId, even
           eventId: eventId,
         }),
       });
-  
-      // Altijd eerst de JSON parsen
+
       const data = await response.json();
-  
+
       if (response.ok) {
         // Check op de precieze message-tekst
         if (data.message === "You are already attending this event.")
@@ -48,7 +51,6 @@ const EventAttendanceForm: React.FC<EventAttendanceFormProps> = ({ eventId, even
       setMessage("An error occurred: " + (error as Error).message);
     }
   };
-  
 
   // ✅ Handle cancel attendance
   const handleCancelAttendance = async () => {
@@ -80,44 +82,41 @@ const EventAttendanceForm: React.FC<EventAttendanceFormProps> = ({ eventId, even
   return (
     <div
       style={{
-        display: "flex", // Plaatst knoppen en tekst op een rij
-        justifyContent: "center", // Centreert alles horizontaal
-        alignItems: "center", // Centreert alles verticaal
-        flexWrap: "wrap", // Laat tekst naar de volgende regel gaan indien nodig
-        gap: "8px", // Ruimte tussen knoppen
-        marginTop: "8px", // Ruimte boven de knoppen
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexWrap: "wrap",
+        gap: "8px",
+        marginTop: "8px",
       }}
     >
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleAttendEvent}
-        sx={{
-          fontSize: "12px", // Kleinere tekst
-          padding: "4px 10px", // Compactere padding
-        }}
-      >
-        Attend Event
-      </Button>
-      <Button
-        variant="outlined"
-        color="secondary"
-        onClick={handleCancelAttendance}
-        sx={{
-          fontSize: "12px", // Kleinere tekst
-          padding: "4px 10px", // Compactere padding
-        }}
-      >
-        Cancel Attendance
-      </Button>
+      {!isAttending ? (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleAttendEvent}
+          sx={{ fontSize: "12px", padding: "4px 10px" }}
+        >
+          Attend Event
+        </Button>
+      ) : (
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={handleCancelAttendance}
+          sx={{ fontSize: "12px", padding: "4px 10px" }}
+        >
+          Cancel Attendance
+        </Button>
+      )}
       {message && (
         <Typography
           sx={{
-            fontSize: "12px", // Klein lettertype voor consistentie
-            marginTop: "4px", // Ruimte boven de foutmelding
-            color: "red", // Laat foutmeldingen duidelijk opvallen
-            textAlign: "center", // Centreer de tekst
-            width: "100%", // Laat de tekst breken indien nodig
+            fontSize: "12px",
+            marginTop: "4px",
+            color: "red",
+            textAlign: "center",
+            width: "100%",
           }}
         >
           {message}

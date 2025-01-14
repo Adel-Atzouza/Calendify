@@ -49,16 +49,17 @@ namespace Calendify.Server.Services
         }
         public async Task<List<AttendeeDtogetattendees>> GetEventAttendees(int eventId)
         {
-            // Query for event attendance records matching the given event ID
             return await _context.EventAttendances
-                .Where(ea => ea.Event.Id == eventId) // Filter by event ID
+                .Where(ea => ea.Event.Id == eventId)
                 .Select(ea => new AttendeeDtogetattendees
                 {
-                    FirstName = ea.User.FirstName, // Select the first name of the user
-                    LastName = ea.User.LastName // Select the last name of the user
+                    UserId = ea.User.Id,  // ✅ Voeg de UserId toe
+                    FirstName = ea.User.FirstName,
+                    LastName = ea.User.LastName
                 })
                 .ToListAsync();
         }
+
 
         public async Task<List<Event>> GetEventsForUser(string userId)
         {

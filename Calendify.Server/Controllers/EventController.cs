@@ -75,6 +75,33 @@ namespace Calendify.Controllers
         }
 
 
+        [HttpGet("Reviews/{EventId}")]
+        public async Task<IActionResult> GetReviewsForEvent(int EventId)
+        {
+            var result = await _eventService.GetReviews(EventId);
+
+            if (result == null || result.Count == 0)
+            {
+                return NotFound("No reviews found for this event.");
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("Rating/{EventId}")]
+        public async Task<IActionResult> GetRatingEvent(int EventId)
+        {
+            var result = await _eventService.avgRatingEvent(EventId);
+
+            if (result == 0)
+            {
+                return NotFound("No rating found for this event.");
+            }
+
+            return Ok(result);
+        }
+
+
 
     }
 }
