@@ -43,7 +43,7 @@ namespace Calendify.Server.Services
                 throw new Exception("UserId must be provided.");
             }
 
-            attendance.Date = DateTime.UtcNow;  // Datum wordt automatisch op de huidige tijd gezet
+            // attendance.Date = DateTime.UtcNow;  // Datum wordt automatisch op de huidige tijd gezet
 
             _context.Attendances.Add(attendance);
             await _context.SaveChangesAsync();
