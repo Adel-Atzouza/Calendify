@@ -2,6 +2,7 @@ using Calendify.Server.Models;
 using Calendify.Server.Data;
 namespace Calendify.Server.Services
 {
+    using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
@@ -72,5 +73,41 @@ namespace Calendify.Server.Services
             return AffectedRows == 1;
         }
 
+        public async Task<EventPage?> GetAllEvents(int PageNumber, int PageSize)
+        {
+            List<Event> Events = await _context.Events.OrderBy(_ => _.Date).ToListAsync();
+            List<Event> CurrentPage = Events.Skip((PageNumber - 1) * PageSize).Take(PageSize).ToList();
+            bool isLastPage = false;
+            if (Events.Last().Id == CurrentPage.Last().Id)
+            {
+                isLastPage = true;
+            }
+            return new EventPage(CurrentPage, isLastPage);
+        }
+
+        public async Task<List<string>> GetReviews(int EventId)
+        {
+            var review = await _context.EventAttendances
+                .Where(o => o.EventId == EventId)
+                .Select(o => o.Feedback)
+                .ToListAsync();
+
+            return review;
+        }
+
+        public async Task<double> avgRatingEvent(int EventId)
+        {
+            var ratings = await _context.EventAttendances
+                .Where(o => o.EventId == EventId)
+                .Select(o => o.Rating)
+                .ToListAsync();
+
+            if (ratings.Count == 0)
+            {
+                return 0;
+            }
+
+            return ratings.Average();
+        }
     }
 }

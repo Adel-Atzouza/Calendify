@@ -1,13 +1,15 @@
 import Typography from "@mui/material/Typography";
-import { EventList, EventListWithDetails } from "../components/EventsList";
-import { events } from "../components/Event.state";
+import { GetAllEvents } from "../components/FetchEvents";
+import { AddEventButton } from "../components/AddEventButton";
+import { useSession } from "../SessionContext";
 
 export default function DashboardPage() {
+  const { session } = useSession();
   return (
     <Typography>
-      Welcome to Toolpad!
+      {session?.user?.roles?.includes("Admin") && <AddEventButton />}
       <div>
-        <EventList Events={events} />
+        <GetAllEvents />
       </div>
     </Typography>
   );

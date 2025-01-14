@@ -22,7 +22,14 @@ namespace Calendify.Controllers
             return _event == null ? NotFound($"Cannot find event with id: {id}") : Ok(_event);
         }
 
-        [Authorize(Roles = "Admin")]
+        [HttpGet("Events")]
+        public async Task<IActionResult> GetAllEvnets([FromQuery] int PageNumber = 1, int PageSize = 5)
+        {
+            EventPage? Page = await _eventService.GetAllEvents(PageNumber, PageSize);
+            if (Page is null) return NotFound("");
+            IActionResult response = Page.Events.Count != 0 ? Ok(Page) : NotFound();
+            return response;
+        }
         [HttpPost()]
         public async Task<IActionResult> PostEvent([FromBody] Event _event)
         {
@@ -65,6 +72,33 @@ namespace Calendify.Controllers
         {
             bool result = await _eventService.DeleteEvent(id);
             return result ? Ok("Event Deleted succesfully") : NotFound("Cannot find event");
+        }
+
+
+        [HttpGet("Reviews/{EventId}")]
+        public async Task<IActionResult> GetReviewsForEvent(int EventId)
+        {
+            var result = await _eventService.GetReviews(EventId);
+
+            if (result == null || result.Count == 0)
+            {
+                return NotFound("No reviews found for this event.");
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("Rating/{EventId}")]
+        public async Task<IActionResult> GetRatingEvent(int EventId)
+        {
+            var result = await _eventService.avgRatingEvent(EventId);
+
+            if (result == 0)
+            {
+                return NotFound("No rating found for this event.");
+            }
+
+            return Ok(result);
         }
 
 

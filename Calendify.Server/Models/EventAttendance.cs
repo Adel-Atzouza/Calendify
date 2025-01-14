@@ -30,6 +30,7 @@ namespace Calendify.Server.Models
 
     public class AttendeeDtogetattendees
     {
+        public string UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }
@@ -47,6 +48,11 @@ namespace Calendify.Server.Models
 
         [MaxLength(250, ErrorMessage = "Feedback cannot exceed 250 characters.")]
         public string? Feedback { get; set; }
+    }
+        public class CancelRequest
+    {
+        public string UserId { get; set; }
+        public int EventId { get; set; }
     }
 
 
