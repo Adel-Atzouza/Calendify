@@ -26,7 +26,6 @@
 //     return event ? <div className="event-label">{event.title}</div> : null;
 //   };
 
-
 //   return (
 //     <div className="calendarContainer">
 //       <Calendar
@@ -41,9 +40,11 @@
 
 // export default MyCalendar;
 
-import React from 'react';
-import Calendar from 'react-calendar';
-import './Calendar.css'; // Import the styles
+import React from "react";
+import Calendar from "react-calendar";
+import "./Calendar.css"; // Import the styles
+import { useSession } from "../SessionContext";
+import { Session } from "inspector";
 
 interface CalendarEvent {
   date: Date;
@@ -58,6 +59,7 @@ interface Props {
 const MyCalendar: React.FC<Props> = ({ events, onDateClick }) => {
   const [value, setValue] = React.useState<Date | Date[]>(new Date());
 
+  
   const handleDateChange = (date: Date | Date[]) => {
     setValue(date);
     if (date instanceof Date) {
@@ -78,7 +80,7 @@ const MyCalendar: React.FC<Props> = ({ events, onDateClick }) => {
         onChange={handleDateChange}
         value={value}
         tileContent={({ date, view }) =>
-          view === 'month' ? renderEventLabel(date) : null
+          view === "month" ? renderEventLabel(date) : null
         }
       />
     </div>
@@ -86,5 +88,3 @@ const MyCalendar: React.FC<Props> = ({ events, onDateClick }) => {
 };
 
 export default MyCalendar;
-
-
