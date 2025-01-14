@@ -71,6 +71,10 @@ export default defineConfig({
                 target: 'https://localhost:5165/',
                 secure: false
             },
+            '^/Attendance': {
+                target: 'https://localhost:5165/', // Zorg ervoor dat de backend op deze poort draait
+                secure: false
+            },
         },
         port: 5173,
         https: {

@@ -30,3 +30,22 @@ Content-Type: application/json
   "adminApproval": false,
   "attendances": []
 }
+
+
+##########
+Post https://localhost:5165/Attendance HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": 0,
+  "userId": "string",
+  "title": "zebbi",
+  "description": "zebbi",
+  "date": "2025-01-14T09:22:31.841Z",
+  "startTime": "09:00:00",
+  "endTime": "10:00:00"
+}
+
+###########
+GET https://localhost:5165/Attendance/1 HTTP/1.1
+Content-Type: application/json

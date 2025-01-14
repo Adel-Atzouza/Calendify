@@ -111,19 +111,43 @@ export const AttendanceComponent: React.FC<AttendanceComponentProps> = ({ open, 
         }
     }, [selectedDate]);
 
-
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (endTime <= startTime) {
             alert("End time must be after start time.");
             return;
         }
 
-        const newEvent: CalendarEvent = {
-            date: new Date(date),
-            title: title
+        const newEvent = {
+            userId: "12345", // Je zou hier de juiste gebruiker moeten toevoegen (bijvoorbeeld via een context of via login)
+            title: title,
+            description: description,
+            date: new Date(date), // Zet de string date om naar een Date object
+            startTime: startTime,
+            endTime: endTime,
         };
 
-        handleAddEvent(newEvent); // Pass new event to parent
+
+        try {
+            const response = await fetch('https://localhost:5165/Attendance', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newEvent),
+            });
+
+            if (!response.ok) {
+                throw new Error('Er is iets misgegaan bij het versturen van het verzoek.');
+            }
+
+            const data = await response.json();
+            console.log("Attendance succesvol toegevoegd:", data);
+            handleAddEvent(newEvent); // Voeg het event toe aan de kalender
+            handleClose(); // Sluit het popup
+        } catch (error) {
+            console.error('Er is een fout opgetreden bij het toevoegen van attendance:', error);
+            alert("Er is een fout opgetreden bij het versturen van het evenement.");
+        }
     };
 
     return (
@@ -190,4 +214,7 @@ export const AttendanceComponent: React.FC<AttendanceComponentProps> = ({ open, 
         </Dialog>
     );
 };
+
+
+
 
