@@ -30,6 +30,7 @@ namespace Calendify.Server.Models
 
     public class AttendeeDtogetattendees
     {
+        public string UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }

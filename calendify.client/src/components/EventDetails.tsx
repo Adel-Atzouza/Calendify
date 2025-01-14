@@ -1,5 +1,4 @@
 import {
-  CircularProgress,
   Typography,
   Button,
   CardActions,
@@ -7,17 +6,59 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ApproveEvent } from "./ApproveEvent";
 import { EventDetailsProps } from "./Event.state";
 import { useSession } from "../SessionContext";
-import EventAttendanceForm from "./EventattendanceForm"; // Voeg deze import toe
+import EventAttendanceForm from "./EventattendanceForm";
+import EventReviewForm from "./EventReviewForm";
 
 const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
   const [message, setMessage] = useState<string>("");
+  const [attendances, setAttendances] = useState<
+    { userId: string; firstName: string; lastName: string }[]
+  >([]);
+  const [averageRating, setAverageRating] = useState<number>(0); // ✅ Nieuw: gemiddelde beoordeling
   const { session } = useSession();
   const date = new Date(event.date);
 
+  // ✅ Haal de lijst met attendees op
+  useEffect(() => {
+    const fetchAttendances = async () => {
+      try {
+        const response = await fetch(`/EventAttendance/${id}/Attendees`);
+        if (response.ok) {
+          const data = await response.json();
+          setAttendances(data);
+        } else {
+          setMessage("Failed to fetch attendees.");
+        }
+      } catch (error) {
+        setMessage("An error occurred: " + (error as Error).message);
+      }
+    };
+
+    fetchAttendances();
+  }, [id]);
+
+  // ✅ Haal de gemiddelde beoordeling op
+  useEffect(() => {
+    const fetchAverageRating = async () => {
+      try {
+        const response = await fetch(`/EventAttendance/${id}/AverageRating`);
+        if (response.ok) {
+          const data = await response.json();
+          setAverageRating(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch average rating:", error);
+      }
+    };
+
+    fetchAverageRating();
+  }, [id]);
+
+  // ✅ Handle approve event
   async function handleApproveEvent() {
     setMessage("Processing approval...");
     try {
@@ -44,20 +85,29 @@ const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
       <Typography>
         Approved: {event.adminApproval ? "Yes" : "No"}
       </Typography>
+      <Typography>
+        Average Rating: {averageRating > 0 ? averageRating.toFixed(1) : "No ratings yet"} / 5
+      </Typography>
 
       <Typography>Attendances:</Typography>
       <List>
-        {event.attendances?.map((attendance, index) => (
+        {attendances.map((attendance, index) => (
           <ListItem key={index}>
             <ListItemText>
-              {attendance.user.firstName} {attendance.user.lastName}
+              {attendance.firstName} {attendance.lastName}
             </ListItemText>
           </ListItem>
         ))}
       </List>
 
+      {/* ✅ EventReviewForm voor het plaatsen van beoordelingen */}
+      <Typography variant="h6" sx={{ marginTop: "16px" }}>
+        Leave a Review
+      </Typography>
+      <EventReviewForm eventId={id} />
+
       {/* EventAttendanceForm voor het bijwonen/annuleren van deelname */}
-      <EventAttendanceForm eventId={id} />
+      <EventAttendanceForm eventId={id} eventAttendances={attendances} />
 
       <CardActions sx={{ justifyContent: "center", marginTop: "16px" }}>
         <Button
