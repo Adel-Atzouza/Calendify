@@ -32,10 +32,6 @@ const router = createBrowserRouter([
             Component: EventsPage,
           },
           {
-            // path: 'Attendance',
-            // Component: attendance,
-          },
-          {
             path: '/settings',
             Component: SettingsPage
           },

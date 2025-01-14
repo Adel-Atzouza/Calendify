@@ -22,7 +22,7 @@ const NAVIGATION: Navigation = [
   },
   {
     segment: 'events',
-    title: 'Events',
+    title: 'Calendar',
     icon: <EventIcon />,
   },
 ];
