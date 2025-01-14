@@ -82,5 +82,47 @@ namespace Calendify.Server.Services
                 })
                 .FirstOrDefaultAsync();  // Retourneer null als geen Attendance gevonden is
         }
+
+        // Haal alle attendances op
+        public async Task<List<Attendance>> GetAllAttendancesAsync()
+        {
+            return await _context.Attendances
+                .Select(a => new Attendance
+                {
+                    Id = a.Id,
+                    UserId = a.UserId,
+                    Title = a.Title,
+                    Description = a.Description,
+                    Date = a.Date,
+                    StartTime = a.StartTime,
+                    EndTime = a.EndTime,
+                })
+                .ToListAsync();
+        }
+
+        // Update een Attendance
+        public async Task<bool> UpdateAttendanceAsync(int id, Attendance updatedAttendance)
+        {
+            var existingAttendance = await _context.Attendances.FindAsync(id);
+            if (existingAttendance == null)
+            {
+                return false; // Event bestaat niet
+            }
+
+            // Update de velden
+            existingAttendance.Title = updatedAttendance.Title;
+            existingAttendance.Description = updatedAttendance.Description;
+            existingAttendance.StartTime = updatedAttendance.StartTime;
+            existingAttendance.EndTime = updatedAttendance.EndTime;
+
+            // Validatie: controleer of de eindtijd na de starttijd ligt
+            if (updatedAttendance.EndTime <= updatedAttendance.StartTime)
+            {
+                throw new Exception("End time must be after start time.");
+            }
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

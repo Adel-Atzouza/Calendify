@@ -83,5 +83,37 @@ namespace Calendify.Server.Controllers
             // Return the AttendanceDTO (with only UserId and other fields)
             return Ok(attendance);
         }
+        // Haal alle attendances op
+        [HttpGet]
+        public async Task<IActionResult> GetAllAttendances()
+        {
+            try
+            {
+                var attendances = await _attendanceService.GetAllAttendancesAsync();
+                return Ok(attendances);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while fetching the attendances.", details = ex.Message });
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAttendance(int id, [FromBody] Attendance updatedAttendance)
+        {
+            try
+            {
+                var result = await _attendanceService.UpdateAttendanceAsync(id, updatedAttendance);
+                if (!result)
+                {
+                    return NotFound($"Attendance with ID {id} not found.");
+                }
+                return NoContent(); // Succesvolle update
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }
