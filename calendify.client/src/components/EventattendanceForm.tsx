@@ -4,9 +4,11 @@ import { useSession } from "../SessionContext";
 
 interface EventAttendanceFormProps {
   eventId: number;
+  eventAttendances: { userId: string }[];
+
 }
 
-const EventAttendanceForm: React.FC<EventAttendanceFormProps> = ({ eventId }) => {
+const EventAttendanceForm: React.FC<EventAttendanceFormProps> = ({ eventId, eventAttendances}) => {
   const { session } = useSession();
   const [message, setMessage] = useState<string>("");
 
@@ -16,7 +18,7 @@ const EventAttendanceForm: React.FC<EventAttendanceFormProps> = ({ eventId }) =>
       setMessage("You need to be logged in to attend this event.");
       return;
     }
-
+  
     try {
       const response = await fetch("/EventAttendance/Attend", {
         method: "POST",
@@ -28,17 +30,25 @@ const EventAttendanceForm: React.FC<EventAttendanceFormProps> = ({ eventId }) =>
           eventId: eventId,
         }),
       });
-
+  
+      // Altijd eerst de JSON parsen
+      const data = await response.json();
+  
       if (response.ok) {
-        setMessage("Successfully attended the event!");
+        // Check op de precieze message-tekst
+        if (data.message === "You are already attending this event.")
+          setMessage("You are already attending this event.");
+        else
+          setMessage("Successfully attended the event!");
       } else {
-        const errorData = await response.json();
-        setMessage(errorData.message || "Failed to attend the event.");
+        // Anders (status niet OK), toon de fout
+        setMessage(data.message || "Failed to attend the event.");
       }
     } catch (error) {
       setMessage("An error occurred: " + (error as Error).message);
     }
   };
+  
 
   // ✅ Handle cancel attendance
   const handleCancelAttendance = async () => {

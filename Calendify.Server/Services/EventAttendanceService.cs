@@ -38,6 +38,7 @@ namespace Calendify.Server.Services
                 User = user,
                 Event = eventToAttend,
                 Feedback = "",
+                AttendedAt = DateTime.UtcNow,
                 Rating = 0
             };
 

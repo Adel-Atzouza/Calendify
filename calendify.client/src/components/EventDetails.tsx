@@ -1,5 +1,4 @@
 import {
-  CircularProgress,
   Typography,
   Button,
   CardActions,
@@ -7,17 +6,38 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ApproveEvent } from "./ApproveEvent";
 import { EventDetailsProps } from "./Event.state";
 import { useSession } from "../SessionContext";
-import EventAttendanceForm from "./EventattendanceForm"; // Voeg deze import toe
+import EventAttendanceForm from "./EventattendanceForm";
 
 const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
   const [message, setMessage] = useState<string>("");
+  const [attendances, setAttendances] = useState<{ userId: string, firstName: string, lastName: string }[]>([]);
   const { session } = useSession();
   const date = new Date(event.date);
 
+  // ✅ Haal de lijst met attendees op
+  useEffect(() => {
+    const fetchAttendances = async () => {
+      try {
+        const response = await fetch(`/EventAttendance/${id}/Attendees`);
+        if (response.ok) {
+          const data = await response.json();
+          setAttendances(data);
+        } else {
+          setMessage("Failed to fetch attendees.");
+        }
+      } catch (error) {
+        setMessage("An error occurred: " + (error as Error).message);
+      }
+    };
+
+    fetchAttendances();
+  }, [id]);
+
+  // ✅ Handle approve event
   async function handleApproveEvent() {
     setMessage("Processing approval...");
     try {
@@ -47,17 +67,17 @@ const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
 
       <Typography>Attendances:</Typography>
       <List>
-        {event.attendances?.map((attendance, index) => (
+        {attendances.map((attendance, index) => (
           <ListItem key={index}>
             <ListItemText>
-              {attendance.user.firstName} {attendance.user.lastName}
+              {attendance.firstName} {attendance.lastName}
             </ListItemText>
           </ListItem>
         ))}
       </List>
 
       {/* EventAttendanceForm voor het bijwonen/annuleren van deelname */}
-      <EventAttendanceForm eventId={id} />
+      <EventAttendanceForm eventId={id} eventAttendances={attendances} />
 
       <CardActions sx={{ justifyContent: "center", marginTop: "16px" }}>
         <Button
