@@ -6,6 +6,7 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
+import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useEffect } from "react";
 import { ApproveEvent } from "./ApproveEvent";
@@ -131,7 +132,9 @@ const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
             >
               Approve Event
             </Button>
-            <DeleteIcon onClick={handleDeleteEvent} />
+            <IconButton onClick={handleDeleteEvent}>
+              <DeleteIcon />
+            </IconButton>
           </>
         )}
       </CardActions>
