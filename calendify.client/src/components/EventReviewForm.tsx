@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Button, colors, TextField, Typography } from "@mui/material";
 import { useSession } from "../SessionContext";
+import Rating from '@mui/material/Rating';
+
 
 interface EventReviewFormProps {
   eventId: number;
@@ -60,7 +62,7 @@ const EventReviewForm: React.FC<EventReviewFormProps> = ({
       <Typography  variant="h4" sx={{ color: "black" }}>
         Leave a Review
       </Typography>
-      <TextField
+      {/* <TextField
         sx={{ color: "black" }}
         label="Rating (1-5)"
         type="number"
@@ -69,7 +71,16 @@ const EventReviewForm: React.FC<EventReviewFormProps> = ({
         inputProps={{ min: 1, max: 5 }}
         fullWidth
         margin="normal"
+      /> */}
+
+      <Rating
+        name="simple-controlled"
+        value={rating}
+        onChange={(event, newValue) => {
+          setRating(Number(newValue))
+        }}
       />
+
       <TextField
         className="EventDetails"
         label="Feedback"

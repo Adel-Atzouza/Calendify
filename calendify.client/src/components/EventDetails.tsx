@@ -14,6 +14,7 @@ import { useSession } from "../SessionContext";
 import EventAttendanceForm from "./EventattendanceForm";
 import EventReviewForm from "./EventReviewForm";
 import { requestDeleteEvent } from "./DeleteEvent";
+import Rating from '@mui/material/Rating';
 
 // Interface voor de reviews
 interface ReviewDto {
@@ -135,7 +136,13 @@ const EventDetails = ({ id, event, closeEvent }: EventDetailsProps) => {
 
       {}
       <Typography>
-        Average Rating: {averageRating > 0 ? averageRating.toFixed(1) : "No ratings"} / 5
+        Average Rating: 
+        {/* {averageRating > 0 ? averageRating.toFixed(1) : "No ratings"} / 5 */}
+        <Rating
+        readOnly
+        name="read-only"
+        value={averageRating}
+      />
       </Typography>
 
       <Typography>Attendances:</Typography>
