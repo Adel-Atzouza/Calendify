@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import Typography from '@mui/material/Typography';
-import MyCalendar from '../components/Calendar';
-import { AttendanceComponent } from '../components/AttendanceComponent';
+import React, { useState, useEffect } from "react";
+import Typography from "@mui/material/Typography";
+import MyCalendar from "../components/Calendar";
+import { AttendanceComponent } from "../components/AttendanceComponent";
 
 interface CalendarEvent {
+  id: number; // Zorg ervoor dat ID aanwezig is
   date: Date;
   title: string;
   description: string;
@@ -19,14 +20,15 @@ const Events: React.FC = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch('/Attendance');
+        const response = await fetch("/Attendance");
         if (!response.ok) {
-          throw new Error('Failed to fetch events');
+          throw new Error("Failed to fetch events");
         }
 
         const data = await response.json();
 
         const fetchedEvents = data.map((event: any) => ({
+          id: event.id, // Voeg het ID toe
           date: new Date(event.date),
           title: event.title,
           description: event.description,
@@ -36,7 +38,7 @@ const Events: React.FC = () => {
 
         setEvents(fetchedEvents);
       } catch (error) {
-        console.error('Error fetching events:', error);
+        console.error("Error fetching events:", error);
       }
     };
 
@@ -64,24 +66,53 @@ const Events: React.FC = () => {
     handleClosePopup();
   };
 
-  const handleDeleteEvent = () => {
+  const handleDeleteEvent = async () => {
     if (selectedDate) {
-      setEvents((prevEvents) =>
-        prevEvents.filter((event) => event.date.toDateString() !== selectedDate.toDateString())
+      const eventToDelete = events.find(
+        (event) => event.date.toDateString() === selectedDate.toDateString()
       );
+
+      if (eventToDelete) {
+        try {
+          // Verwijder het evenement via de backend
+          const response = await fetch(`/Attendance/${eventToDelete.id}`, {
+            method: "DELETE",
+          });
+
+          if (!response.ok) {
+            throw new Error("Failed to delete event");
+          }
+
+          // Verwijder het evenement uit de frontend-state
+          setEvents((prevEvents) =>
+            prevEvents.filter((event) => event.id !== eventToDelete.id)
+          );
+
+          console.log(`Event with ID ${eventToDelete.id} deleted.`);
+          handleClosePopup(); // Sluit de popup
+        } catch (error) {
+          console.error("Error deleting event:", error);
+          alert("Failed to delete the event.");
+        }
+      } else {
+        alert("No event found to delete.");
+      }
     }
-    handleClosePopup();
   };
 
   return (
     <div>
+      <Typography variant="h4">Events Dashboard</Typography>
+
+      {/* Kalendercomponent met evenementen */}
       <MyCalendar events={events} onDateClick={handleDateClick} />
 
+      {/* AttendanceComponent voor toevoegen/bewerken/verwijderen van evenementen */}
       <AttendanceComponent
         open={openPopup}
         handleClose={handleClosePopup}
         handleAddEvent={handleAddEvent}
-        handleDelete={handleDeleteEvent}
+        handleDelete={handleDeleteEvent} // Verwijst naar de nieuwe delete-functionaliteit
         selectedDate={selectedDate}
         events={events}
       />
