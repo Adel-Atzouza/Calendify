@@ -2,7 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import MyCalendar from '../components/Calendar';
 import { AttendanceComponent } from '../components/AttendanceComponent';
-import { CalendarEvent } from '../types'; // Shared interface
+
+interface CalendarEvent {
+  date: Date;
+  title: string;
+  description: string;
+  startTime: string;
+  endTime: string;
+}
 
 const Events: React.FC = () => {
   const [events, setEvents] = useState<CalendarEvent[]>([]);

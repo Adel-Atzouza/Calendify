@@ -1,4 +1,4 @@
-// export const deleteAttendance = async (id: number): Promise<void> => {
+// const deleteAttendance = async (id: number): Promise<void> => {
 //     try {
 //         const response = await fetch(`/Attendance/${id}`, {
 //             method: "DELETE",
@@ -15,4 +15,6 @@
 //         throw error;
 //     }
 // };
+
+// export default deleteAttendance;
 
