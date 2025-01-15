@@ -34,8 +34,12 @@ export default function SettingsPage() {
       }
     })
     .then(
-        x => setFormValues( x )
+        x => {
+          setFormValues( x )
+        }
+
     )
+
     
   }, []);
 

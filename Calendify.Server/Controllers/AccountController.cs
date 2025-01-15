@@ -90,19 +90,19 @@ namespace Calendify.Server.Controllers
         [HttpPost("v2/settings")]
         public async Task<IActionResult> SaveSettings([FromBody] SettingsDto settingsDto)
         {
-            try {
+            // try {
                     var user = await userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
                     user.ImgUrl = settingsDto.ImgUrl;
 
                     var result = userManager.UpdateAsync(user);
 
                     return Ok("Settings saved");
-            } 
-            catch 
-            {
-            return BadRequest();
+            // } 
+            // catch 
+            // {
+            // return BadRequest();
 
-            }
+            // }
             
         }
 

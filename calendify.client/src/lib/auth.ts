@@ -25,7 +25,14 @@ export const register = async (formData : any) => {
             console.log("Account registered.");
             return true; // Return true to indicate success
         } else {
-            throw new Error("Email already registered");
+            let res = await response.json();
+            if (Array.isArray(res) && res.length > 0) {
+                const error = res[0];
+                throw new Error(error["description"]); // Access the error message
+            }
+            else {
+                throw new Error("An error occured");
+            }
         }
     }
 };
@@ -125,11 +132,13 @@ export const SaveSettings = async (formData : any) => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            imgurl: formData.get('imgurl'),
+            imgurl: formData.get('imgurl') ? formData.get('imgurl')  : "",
         }),
     });
     if (response.ok) {
         console.log("Settings saved.");
+        window.location.reload(false)
+
         return true; // Return true to indicate success
     } else {
         throw new Error("Error savins settings");

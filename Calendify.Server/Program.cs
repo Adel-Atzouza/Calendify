@@ -29,12 +29,6 @@ namespace Calendify.Server
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            builder.Services.AddAuthentication().AddGoogle(googleOptions =>
-            {
-                googleOptions.ClientId = configuration["ClientId"];
-                googleOptions.ClientSecret = configuration["ClientSecret"];
-            });
-
             // builder.Services.AddIdentity<AppUser, IdentityRole>()
             //     .AddEntityFrameworkStores<ApplicationDbContext>();
 

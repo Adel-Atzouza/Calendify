@@ -7717,24 +7717,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sven\\.nuget\\packages\\": {}
+    "/home/adil/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
+      "projectUniqueName": "/home/adil/Desktop/Calendify/Calendify.Server/Calendify.Server.csproj",
       "projectName": "Calendify.Server",
-      "projectPath": "C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\Calendify.Server.csproj",
-      "packagesPath": "C:\\Users\\sven\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\obj\\",
+      "projectPath": "/home/adil/Desktop/Calendify/Calendify.Server/Calendify.Server.csproj",
+      "packagesPath": "/home/adil/.nuget/packages/",
+      "outputPath": "/home/adil/Desktop/Calendify/Calendify.Server/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\sven\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/adil/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
+        "/usr/lib/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -7825,16 +7826,8 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\sven\\school\\Calendify\\Calendify.Server\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  }
 }
