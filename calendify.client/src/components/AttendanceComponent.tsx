@@ -83,7 +83,7 @@ export const AttendanceComponent: React.FC<AttendanceComponentProps> = ({
 
     return (
         <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>{title ? "Edit Event" : "Add Event"}</DialogTitle>
+            <DialogTitle>{"Add Event"}</DialogTitle>
             <DialogContent>
                 <TextField
                     label="Title"
